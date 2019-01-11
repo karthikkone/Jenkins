@@ -98,6 +98,7 @@ public class FetchJobs {
 		try{
 		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@1234");
 		//jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");		
+		JSONObject jsonobj = new JSONObject();	
 		JobWithDetails jobinfo = jenkins.getJob(buildname);		
 		//queueRef=jobinfo.build(true);		
 		//queueItem = jenkins.getQueueItem(queueRef);
