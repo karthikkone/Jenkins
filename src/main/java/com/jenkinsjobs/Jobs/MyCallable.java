@@ -78,11 +78,9 @@ public class MyCallable implements Callable<String> {
                 e.printStackTrace();
             }
         }
-        //shut down the executor service now
-       if(!list.isEmpty())
-        {
+        //shut down the executor service now      
         executor.shutdown();
-        }
+        
     }
 
 }
