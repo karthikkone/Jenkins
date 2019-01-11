@@ -79,7 +79,10 @@ public class MyCallable implements Callable<String> {
             }
         }
         //shut down the executor service now
+       if(!list.isEmpty())
+        {
         executor.shutdown();
+        }
     }
 
 }
