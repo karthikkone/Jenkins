@@ -90,9 +90,9 @@ public class FetchJobs {
 		}
 	}
 	
-	//@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
-	//public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
-	public void StartJob(String buildname) throws Exception
+	@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
+	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
+	//public void StartJob(String buildname) throws Exception
 	{
 		String res = null;
 		try{
