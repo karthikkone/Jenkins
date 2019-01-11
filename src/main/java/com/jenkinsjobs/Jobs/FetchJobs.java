@@ -110,13 +110,15 @@ public class FetchJobs {
 	            try {
 	                //print the return value of Future, notice the output delay in console
 	                // because Future.get() waits for task to get completed
-	                System.out.println(new Date()+ "::"+fut.get());
+	                //System.out.println(new Date()+ "::"+fut.get());
+			jsonobj.put("Result :"+fut.get());
 	            	//System.out.println(new Date()+ "::"+future);
 	            } 
 	            catch (Exception e) {
 	                e.printStackTrace();
 	            }
 		 }
+		 return jsonobj;
 		/*JSONObject jsonobj = new JSONObject();				
 		while (queueItem.getExecutable() == null) {		
 		       Thread.sleep(DEFAULT_RETRY_INTERVAL);
