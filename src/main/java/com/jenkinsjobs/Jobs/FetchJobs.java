@@ -112,7 +112,7 @@ public class FetchJobs {
 	                //print the return value of Future, notice the output delay in console
 	                // because Future.get() waits for task to get completed
 	                //System.out.println(new Date()+ "::"+fut.get());
-			jsonobj.put("Result :"+fut.get());
+			jsonobj.put("Result :",fut.get());
 	            	//System.out.println(new Date()+ "::"+future);
 	            } 
 	            catch (Exception e) {
