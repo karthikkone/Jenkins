@@ -67,7 +67,8 @@ public class FetchJobs {
 	{
 		 try {
 	         //jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
-			 jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");
+		 //jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");
+		 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
 	         //System.out.println("new jobs... :"+jobs);
@@ -96,8 +97,9 @@ public class FetchJobs {
 	{
 		String res = null;
 		try{
-		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@1234");
+		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@1234");
 		//jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");		
+		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
 		JSONObject jsonobj = new JSONObject();	
 		JobWithDetails jobinfo = jenkins.getJob(buildname);		
 		//queueRef=jobinfo.build(true);		
