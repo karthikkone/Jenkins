@@ -70,7 +70,8 @@ public class FetchJobs {
 	{
 		 try {
 	         //jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
-			 jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");
+		 //jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");
+		 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
 	         //System.out.println("new jobs... :"+jobs);
@@ -97,6 +98,7 @@ public class FetchJobs {
 	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
 	//public void StartJob(String buildname) throws Exception
 	{
+<<<<<<< HEAD
 		 JSONObject jsonobj = new JSONObject();	       
 		JobStatus jobStat = new JobStatus();
 		jobStat.setBuildname(buildname);
@@ -107,6 +109,63 @@ public class FetchJobs {
 	    bThread.start();
 	    jsonobj.put("result", "success");
 		return jsonobj;
+=======
+		String res = null;
+		try{
+		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@1234");
+		//jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");		
+		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+		JSONObject jsonobj = new JSONObject();	
+		JobWithDetails jobinfo = jenkins.getJob(buildname);		
+		//queueRef=jobinfo.build(true);		
+		//queueItem = jenkins.getQueueItem(queueRef);
+		 ExecutorService executor = Executors.newFixedThreadPool(1);
+		 List<Future<String>> list = new ArrayList<Future<String>>();
+		 Callable<String> callable = new MyCallable(jenkins,buildname);
+		 Future<String> future = executor.submit(callable);
+		 list.add(future);
+		 for(Future<String> fut : list){
+	            try {
+	                //print the return value of Future, notice the output delay in console
+	                // because Future.get() waits for task to get completed
+	                //System.out.println(new Date()+ "::"+fut.get());
+			jsonobj.put("Result :",fut.get());
+	            	//System.out.println(new Date()+ "::"+future);
+	            } 
+	            catch (Exception e) {
+	                e.printStackTrace();
+	            }
+		 }
+		 return jsonobj;
+		/*JSONObject jsonobj = new JSONObject();				
+		while (queueItem.getExecutable() == null) {		
+		       Thread.sleep(DEFAULT_RETRY_INTERVAL);
+		       queueItem = jenkins.getQueueItem(queueRef);
+		      
+		}
+		Build build = jenkins.getBuild(queueItem);	
+		System.out.println("queue item 2:"+queueItem);		
+		//jsonobj.put("Id", build.getQueueId());		
+		/*while(CheckStatus(queueItem) == true)
+		{
+			System.out.println("Job Is In Progress");
+		}
+		if(CheckResult(queueItem)!=null)
+		{
+		if(build.details().getResult() == build.details().getResult().SUCCESS)
+		{res="success";	}
+		
+		return res;*/
+		}
+		 catch (Exception e) {
+	         System.err.println(e.getMessage());
+	         throw e;
+	     	}
+		finally 
+		{
+		jenkins.close();
+		}
+>>>>>>> 7d3f7d86a7f3bd5f8863252696200f3836a07385
 	}
 	@RequestMapping(value="/CheckStatus",params={"queueid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("queueid") QueueItem queueid) throws Exception 
