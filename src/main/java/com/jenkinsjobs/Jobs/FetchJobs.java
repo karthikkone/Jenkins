@@ -20,6 +20,7 @@ import java.util.Date;
 
 import net.sf.json.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,18 +51,20 @@ public class FetchJobs {
     @Value("${jobs.password}")
     private String password;
     public JenkinsServer jenkins;
-    private final Long retryInterval;
+    //private final Long retryInterval;
     private static final Long DEFAULT_RETRY_INTERVAL = 200L;
     boolean flag=false;
     private static QueueReference queueRef;
     private static QueueItem queueItem;
-	
-	FetchJobs() throws URISyntaxException
-	{		
-		//jenkins = new JenkinsServer(new URI("http://konevcs.cloudapp.net"), "shovan", "infosys@123");
-		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
-		retryInterval = DEFAULT_RETRY_INTERVAL;
+    private AuthDataRepository  authDataRepository;
+	public FetchJobs()
+	{
+		
 	}
+	@Autowired
+    public FetchJobs(AuthDataRepository  authDataRepository) {
+        this.authDataRepository = authDataRepository;     
+    }
 	@RequestMapping(value="/jobs", method=RequestMethod.GET)
 	public JSONObject getJobs() throws Exception 
 	{
@@ -90,61 +93,20 @@ public class FetchJobs {
 		}
 	}
 	
-	//@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
-	//public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
-	public void StartJob(String buildname) throws Exception
+	@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
+	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
+	//public void StartJob(String buildname) throws Exception
 	{
-		String res = null;
-		try{
-		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@1234");
-		//jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");		
-		JobWithDetails jobinfo = jenkins.getJob(buildname);		
-		//queueRef=jobinfo.build(true);		
-		//queueItem = jenkins.getQueueItem(queueRef);
-		 ExecutorService executor = Executors.newFixedThreadPool(1);
-		 List<Future<String>> list = new ArrayList<Future<String>>();
-		 Callable<String> callable = new MyCallable(jenkins,buildname);
-		 Future<String> future = executor.submit(callable);
-		 list.add(future);
-		 for(Future<String> fut : list){
-	            try {
-	                //print the return value of Future, notice the output delay in console
-	                // because Future.get() waits for task to get completed
-	                System.out.println(new Date()+ "::"+fut.get());
-	            	//System.out.println(new Date()+ "::"+future);
-	            } 
-	            catch (Exception e) {
-	                e.printStackTrace();
-	            }
-		 }
-		/*JSONObject jsonobj = new JSONObject();				
-		while (queueItem.getExecutable() == null) {		
-		       Thread.sleep(DEFAULT_RETRY_INTERVAL);
-		       queueItem = jenkins.getQueueItem(queueRef);
-		      
-		}
-		Build build = jenkins.getBuild(queueItem);	
-		System.out.println("queue item 2:"+queueItem);		
-		//jsonobj.put("Id", build.getQueueId());		
-		/*while(CheckStatus(queueItem) == true)
-		{
-			System.out.println("Job Is In Progress");
-		}
-		if(CheckResult(queueItem)!=null)
-		{
-		if(build.details().getResult() == build.details().getResult().SUCCESS)
-		{res="success";	}
-		
-		return res;*/
-		}
-		 catch (Exception e) {
-	         System.err.println(e.getMessage());
-	         throw e;
-	     	}
-		finally 
-		{
-		jenkins.close();
-		}
+		 JSONObject jsonobj = new JSONObject();	       
+		JobStatus jobStat = new JobStatus();
+		jobStat.setBuildname(buildname);
+		jobStat.setBuildstatus("In Progress");
+		System.out.println("buildname :"+jobStat.getBuildname());
+		authDataRepository.saveAndFlush(jobStat);
+		Thread bThread = new Thread(new BuildThread(jobStat.getBuildid(),buildname));
+	    bThread.start();
+	    jsonobj.put("result", "success");
+		return jsonobj;
 	}
 	@RequestMapping(value="/CheckStatus",params={"queueid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("queueid") QueueItem queueid) throws Exception 
