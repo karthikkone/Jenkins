@@ -79,11 +79,17 @@ public class MyCallable implements Callable<String> {
                 e.printStackTrace();
             }
         }
+<<<<<<< HEAD
         //shut down the executor service now
         if(!list.isEmpty())
         {
         executor.shutdown();
         }
+=======
+        //shut down the executor service now      
+        executor.shutdown();
+        
+>>>>>>> 7d3f7d86a7f3bd5f8863252696200f3836a07385
     }
 
 }
