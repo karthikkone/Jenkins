@@ -29,7 +29,7 @@ public class MyCallable implements Callable<String> {
 		this.BuildName = BuildName;
 		this.jenkins = jenkins;
 	}
-
+      
 	@Override
     public String call() throws Exception {
 		JobWithDetails jobinfo = jenkins.getJob(this.BuildName);		
@@ -43,13 +43,14 @@ public class MyCallable implements Callable<String> {
 		      
 		}
 		Build build = jenkins.getBuild(queueItem);	
-		System.out.println("queue item 2:"+queueItem);			
+		/*System.out.println("queue item 2:"+queueItem);			
 		while(build.details().getResult() == null)
 		{
 			continue;
-		}
-		String res=build.details().getResult().toString();
-		return res;
+		}*/
+		//String res=build.details().getResult().toString();
+		//return res;
+		return null;
     }
     
     public static void main(String args[]) throws Exception{    	   	
@@ -79,7 +80,10 @@ public class MyCallable implements Callable<String> {
             }
         }
         //shut down the executor service now
+        if(!list.isEmpty())
+        {
         executor.shutdown();
+        }
     }
 
 }
