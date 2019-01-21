@@ -131,7 +131,7 @@ public class FetchJobs {
 		return jsonobj;
 	}
 	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
-	public JSONObject CheckStatus(@RequestParam("buildid") long queueid) throws Exception 
+	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
 	//public List<JobStatus> CheckStatus(long buildid)
 	{
 	    
