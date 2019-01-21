@@ -139,7 +139,10 @@ public class FetchJobs {
 		try {
 			JSONObject Jsonobj=new JSONObject();
 			List<JobStatus> jobs1 = session.createQuery("FROM JobStatus where buildid="+buildid).list();
-			Jsonobj.put("Result", jobs1.get(1).getBuildstatus());
+			for(int i=0;i<jobs1.size();i++)
+	       		 {
+			   Jsonobj.put("Result", jobs1.get(i).getBuildstatus());
+	        	 }
 			return Jsonobj;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
