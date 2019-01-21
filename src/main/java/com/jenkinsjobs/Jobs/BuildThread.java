@@ -41,7 +41,8 @@ public class BuildThread{
 		JenkinsServer jenkins;
 		SessionFactory sessionFactory = s;
 		try {
-			jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");			 
+			//jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");	
+			jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
 			 JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			queueRef=jobinfo.build(true);	
 			//CreateBuildInDB(sessionFactory,1,this.buildName,"In Progress");
