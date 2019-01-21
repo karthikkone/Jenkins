@@ -72,7 +72,8 @@ public class FetchJobs {
 	public JSONObject getJobs() throws Exception 
 	{
 		 try {
-	         jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
+	         //jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
+		 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@123");
 	         //jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
@@ -151,7 +152,8 @@ public class FetchJobs {
 	public JSONObject StopJob() throws Exception 
 	{
 		try{
-		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
+		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
+		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@123");
 		while(queueItem == null)
 		{
 	           Thread.sleep(50L);
