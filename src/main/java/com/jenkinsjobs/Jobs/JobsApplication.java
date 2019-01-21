@@ -1,4 +1,4 @@
-/*package com.jenkinsjobs.Jobs;
+package com.jenkinsjobs.Jobs;
 
 //import org.json.JSONObject;
 import net.sf.json.*;
@@ -25,7 +25,7 @@ public class JobsApplication {
 	public static void main(String[] args) throws URISyntaxException {
 		SpringApplication.run(JobsApplication.class, args);
 		
-		FetchJobs obj = new FetchJobs();		
+		/*FetchJobs obj = new FetchJobs();		
 		try {
 			//JSONObject jarray = obj.getJobs();
 			/*for(int i=0;i<jarray.size();i++)
@@ -44,8 +44,8 @@ public class JobsApplication {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 }
-*/
+
