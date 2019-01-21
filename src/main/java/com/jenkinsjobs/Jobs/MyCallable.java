@@ -1,4 +1,4 @@
-package com.jenkinsjobs.Jobs;
+/*package com.jenkinsjobs.Jobs;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class MyCallable implements Callable<String> {
 		while(build.details().getResult() == null)
 		{
 			continue;
-		}*/
+		}
 		//String res=build.details().getResult().toString();
 		//return res;
 		return null;
@@ -92,4 +92,4 @@ public class MyCallable implements Callable<String> {
 >>>>>>> 7d3f7d86a7f3bd5f8863252696200f3836a07385
     }
 
-}
+}*/
