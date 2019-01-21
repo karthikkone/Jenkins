@@ -1,4 +1,4 @@
-package com.jenkinsjobs.Jobs;
+/*package com.jenkinsjobs.Jobs;
 
 //import org.json.JSONObject;
 import net.sf.json.*;
@@ -31,7 +31,7 @@ public class JobsApplication {
 			/*for(int i=0;i<jarray.size();i++)
 			{
 				System.out.println(jarray.toString(i));
-			}*/
+			}
 			obj.StartJob("testjob1");
 			java.util.List<JobStatus> jobs1=obj.CheckStatus(1);
 			for(int i=0;i<jobs1.size();i++)
@@ -48,3 +48,4 @@ public class JobsApplication {
 		
 	}
 }
+*/
