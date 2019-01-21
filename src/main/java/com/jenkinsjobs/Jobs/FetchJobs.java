@@ -73,7 +73,7 @@ public class FetchJobs {
 	{
 		 try {
 	         //jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
-		 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@123");
+		 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy@1234");
 	         //jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
