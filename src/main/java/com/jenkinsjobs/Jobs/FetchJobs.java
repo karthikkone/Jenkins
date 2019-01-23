@@ -121,8 +121,9 @@ public class FetchJobs {
         	System.err.println("jobs in array :"+jobs1.get(i).getBuildid()+" "+jobs1.get(i).getBuildname()+" "+jobs1.get(i).getBuildstatus());
         }
 		BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
-		status=b.Start(sessionFactory);
-		jobStat.setBuildstatus(status);
+		b.Start(sessionFactory);
+		//status=b.Start(sessionFactory);
+		//jobStat.setBuildstatus(status);
 		List<JobStatus> jobs = session.createQuery("FROM JobStatus").list();
         //jobs.forEach((x) -> System.out.printf("- %s%n", x));          
         for(int i=0;i<jobs.size();i++)
@@ -131,25 +132,6 @@ public class FetchJobs {
         }	    
 		return jsonobj;
 	}
-	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
-	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
-	//public List<JobStatus> CheckStatus(long buildid)
-	{
-	    
-		try {
-			JSONObject Jsonobj=new JSONObject();
-			List<JobStatus> jobs1 = session.createQuery("FROM JobStatus where buildid="+buildid).list();
-			for(int i=0;i<jobs1.size();i++)
-	       		 {
-			   Jsonobj.put("Result", jobs1.get(i).getBuildstatus());
-	        	 }
-			return Jsonobj;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}							
-		return null;
-	}	
 			
 	@RequestMapping(value="/Stopjobs",method=RequestMethod.GET)
 	public JSONObject StopJob() throws Exception 
