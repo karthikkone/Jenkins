@@ -1,4 +1,4 @@
-/*package com.jenkinsjobs.Jobs;
+package com.jenkinsjobs.Jobs;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import com.offbytwo.jenkins.model.QueueItem;
 import com.offbytwo.jenkins.model.QueueReference;
 
 import net.sf.json.JSONObject;
-
+/*
 public class MyCallable implements Callable<String> {
 	public static JenkinsServer jenkins;	
 	public String BuildName;
@@ -47,10 +47,10 @@ public class MyCallable implements Callable<String> {
 		while(build.details().getResult() == null)
 		{
 			continue;
-		}
+		}*/
 		//String res=build.details().getResult().toString();
 		//return res;
-		return null;
+		/*return null;
     }
     
     public static void main(String args[]) throws Exception{    	   	
@@ -86,4 +86,5 @@ public class MyCallable implements Callable<String> {
         }
     }
 
-}*/
+}
+*/
