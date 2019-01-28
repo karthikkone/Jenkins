@@ -32,6 +32,8 @@ public class BuildThread implements Runnable{
 	private static QueueItem queueItem;	 
 	 @Autowired
 	    private BuildService service;
+	 @Autowired
+	 private JobStatusRepo jobsrepo;
 	public BuildThread()
 	{
 		
@@ -61,16 +63,32 @@ public class BuildThread implements Runnable{
 				continue;
 			}
 			JobStatus job = service.getbuild(this.buildId);
+			Optional<JobStatus> jobstatus = jobsrepo.findById(buildId);
+			
+
+				
+			
+			
 			if(build.details().getResult() == build.details().getResult().SUCCESS)
 			{					
-				job.setBuildstatus("SUCCESS");
-				service.updateBuild(job);
+				//job.setBuildstatus("SUCCESS");
+				//service.updateBuild(job);
+				
+				jobstatus.ifPresent(currentBuild -> {
+					currentBuild.setBuildstatus("SUCCESS");
+					jobsrepo.saveAndFlush(currentBuild);
+				});
 				
 			}
 			else if (build.details().getResult() == build.details().getResult().FAILURE) {
 				
-				job.setBuildstatus("FAILURE");
-				service.updateBuild(job);
+				//job.setBuildstatus("FAILURE");
+				//service.updateBuild(job);
+				
+				jobstatus.ifPresent(currentBuild -> {
+					currentBuild.setBuildstatus("FAILURE");
+					jobsrepo.saveAndFlush(currentBuild);
+				});
 				
 			}
 		} catch (Exception e) {
