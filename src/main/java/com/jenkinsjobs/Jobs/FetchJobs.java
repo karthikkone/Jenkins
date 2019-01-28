@@ -108,12 +108,19 @@ public class FetchJobs {
 	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
 	//public JSONObject CheckStatus(long buildid)
 	{
+		try
+		{
 		JSONObject Jsonobj = new JSONObject();
 		//SessionFactory sessionFactory = s;
 		
 			JobStatus job = service.getbuild(buildid);		
 			Jsonobj.put("Status", job);
 			return Jsonobj;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 			
 	}	
 			
