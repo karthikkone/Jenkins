@@ -63,11 +63,8 @@ public class FetchJobs {
     private JobStatusRepo Repo;
     private static SessionFactory sessionFactory;
     private static Session session;
-    //@Autowired
-	public FetchJobs(JobStatusRepo Repo)
-	{
-		this.Repo=Repo;
-	}
+    @Autowired
+    private BuildService service;
 	
 	@RequestMapping(value="/jobs", method=RequestMethod.GET)
 	public JSONObject getJobs() throws Exception 
@@ -98,77 +95,26 @@ public class FetchJobs {
 	}
 	
 	@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
-	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
+	public void StartJob(@RequestParam("buildname") String buildname) throws Exception 
 	//public void StartJob(String buildname) throws Exception
 	{
-		String status;		
 		JSONObject jsonobj = new JSONObject();	       
-		JobStatus jobStat = new JobStatus();
-		jobStat.setBuildname(buildname);
-		jobStat.setBuildstatus("In Progress");
-		/*System.out.println("buildname :"+jobStat.getBuildname());		
-		session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(jobStat);       
-		session.getTransaction().commit();
-		List<JobStatus> jobs1 = session.createQuery("FROM JobStatus").list();*/
-        //jobs.forEach((x) -> System.out.printf("- %s%n", x));        
-		jsonobj.put("Build id", jobStat.getBuildid());
-		jsonobj.put("Build Name", jobStat.getBuildname());
-		jsonobj.put("Build Status", jobStat.getBuildstatus());
-        /*for(int i=0;i<jobs1.size();i++)
-        {
-        	System.err.println("jobs in array :"+jobs1.get(i).getBuildid()+" "+jobs1.get(i).getBuildname()+" "+jobs1.get(i).getBuildstatus());
-        }*/
-		Repo.saveAndFlush(jobStat);
-		System.out.println("repo count :"+Repo.count());
-		//BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
-		//b.Start(sessionFactory);
-		List<JobStatus> jobs2 = session.createQuery("FROM JobStatus where buildid="+jobStat.getBuildid()).list();
-		//java.util.List<JobStatus> jobs=CheckStatus(jobStat.getBuildid());
-		/*for(int i=0;i<jobs1.size();i++)
-        {
-        	System.err.println("Status of build :"+jobs2.get(i).getBuildid()+" "+jobs2.get(i).getBuildname()+" " +jobs2.get(i).getBuildstatus());
-        }*/
-		//status=b.Start(sessionFactory);
-		//jobStat.setBuildstatus(status);
-		//List<JobStatus> jobs = session.createQuery("FROM JobStatus").list();
-        //jobs.forEach((x) -> System.out.printf("- %s%n", x));          
-        /*for(int i=0;i<jobs.size();i++)
-        {
-        	System.err.println("jobs in array :"+jobs.get(i).getBuildid()+" "+jobs.get(i).getBuildname()+" "+jobs.get(i).getBuildstatus());
-        }	    */
-		jsonobj.put("repo count",Repo.count());
-		return jsonobj;
+		JobStatus jobStat = service.createBuild(new JobStatus(buildname,"In Progress"));
+		System.out.println("repo count :"+jobStat.getBuildname()+" "+jobStat.getBuildid()+" "+jobStat.getBuildstatus());
+		BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
+		b.run();
 	}
-	//@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
-	//public JSONObject CheckStatus(@RequestParam("buildid") String queueid) throws Exception 
-	public List<JobStatus> CheckStatus(long buildid)
+	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
+	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
+	//public JSONObject CheckStatus(long buildid)
 	{
+		JSONObject Jsonobj = new JSONObject();
 		//SessionFactory sessionFactory = s;
-		session = sessionFactory.getCurrentSession();
-		try {
-			JSONObject Jsonobj=new JSONObject();
-			if (!session.isOpen()) 
-			{
-				System.out.println("session was terminated");
-				session = sessionFactory.openSession();
-			}
-			else{
-			List<JobStatus> jobs1 = session.createQuery("FROM JobStatus where buildid="+buildid).list();
-			//for(int i=0;i<jobs1.size();i++)
-	        //{
-				System.out.println("result in checkstatus:"+jobs1.get(0).getBuildid()+jobs1.get(0).getBuildstatus());
-			//Jsonobj.put("Result", jobs1.get(i).getBuildstatus());
-	       // }
-			//return Jsonobj;
-			return jobs1;
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}							
-		return null;
+		
+			JobStatus job = service.getbuild(buildid);		
+			Jsonobj.put("Status", job);
+			return Jsonobj;
+			
 	}	
 			
 	@RequestMapping(value="/Stopjobs",method=RequestMethod.GET)
