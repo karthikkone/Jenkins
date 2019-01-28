@@ -18,9 +18,9 @@ public class JobStatus {
 	{
 		
 	}
-	public JobStatus(Long buildid, String buildname, String buildstatus) {
+	public JobStatus(String buildname, String buildstatus) {
 		super();
-		this.buildid = buildid;
+		//this.buildid = buildid;
 		this.buildname = buildname;
 		this.buildstatus = buildstatus;
 	}
