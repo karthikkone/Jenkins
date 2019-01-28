@@ -114,7 +114,9 @@ public class FetchJobs {
 		//SessionFactory sessionFactory = s;
 		
 			JobStatus job = service.getbuild(buildid);		
-			Jsonobj.put("Status", job);
+			Jsonobj.put("Buildid", job.getBuildid());
+			Jsonobj.put("Buildname", job.getBuildname());
+			Jsonobj.put("Buildstatus", job.getBuildstatus());
 			return Jsonobj;
 		}
 		catch(Exception e)
