@@ -65,7 +65,7 @@ public class BuildThread implements Runnable{
 			{						 
 				continue;
 			}
-			JobStatus job = service.getbuild(this.buildId);
+			//JobStatus job = service.getbuild(this.buildId);
 			Optional<JobStatus> jobstatus = jobsrepo.findById(buildId);			
 			if(build.details().getResult() == build.details().getResult().SUCCESS)
 			{					
