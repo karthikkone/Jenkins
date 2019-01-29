@@ -14,6 +14,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
 //import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.offbytwo.jenkins.JenkinsServer;
 import com.offbytwo.jenkins.model.Build;
@@ -63,12 +66,7 @@ public class BuildThread implements Runnable{
 				continue;
 			}
 			JobStatus job = service.getbuild(this.buildId);
-			Optional<JobStatus> jobstatus = jobsrepo.findById(buildId);
-			
-
-				
-			
-			
+			Optional<JobStatus> jobstatus = jobsrepo.findById(buildId);			
 			if(build.details().getResult() == build.details().getResult().SUCCESS)
 			{					
 				//job.setBuildstatus("SUCCESS");
@@ -99,27 +97,27 @@ public class BuildThread implements Runnable{
 		//return null;
 		
 	}
-	/*public List<JobStatus> CheckStatus(SessionFactory s,long buildid)
+	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
+	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
+	//public JSONObject CheckStatus(long buildid)
 	{
-	    
-		try {
-			JSONObject Jsonobj=new JSONObject();
-			SessionFactory sessionFactory = s;
-			session = sessionFactory.openSession();
-			List<JobStatus> jobs1 = session.createQuery("FROM JobStatus where buildid="+buildid).list();
-			for(int i=0;i<jobs1.size();i++)
-	        {
-				System.out.println("result :"+jobs1.get(i).getBuildstatus());
-			//Jsonobj.put("Result", jobs1.get(i).getBuildstatus());
-	        }
-			//return Jsonobj;
-			return jobs1;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		try
+		{
+		JSONObject Jsonobj = new JSONObject();
+		//SessionFactory sessionFactory = s;
+		
+			JobStatus job = service.getbuild(buildid);		
+			Jsonobj.put("Buildid", job.getBuildid());
+			Jsonobj.put("Buildname", job.getBuildname());
+			Jsonobj.put("Buildstatus", job.getBuildstatus());
+			return Jsonobj;
+		}
+		catch(Exception e)
+		{
 			e.printStackTrace();
-		}							
+		}
 		return null;
-	}	*/
+	}	
 	
 		// TODO Auto-generated method stub
 		
