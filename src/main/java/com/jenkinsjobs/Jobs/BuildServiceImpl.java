@@ -10,7 +10,8 @@ public class BuildServiceImpl implements BuildService{
 	@Override
 	public JobStatus createBuild(JobStatus job) {
 		// TODO Auto-generated method stub
-		return JobsRepo.save(job);
+		//return JobsRepo.save(job);
+		return JobsRepo.saveAndFlush(job);
 	}
 
 	@Override
@@ -22,7 +23,8 @@ public class BuildServiceImpl implements BuildService{
 	@Override
 	public JobStatus updateBuild(JobStatus job) {
 		// TODO Auto-generated method stub
-		return JobsRepo.save(job);
+		//return JobsRepo.save(job);
+		return JobsRepo.saveAndFlush(job);
 	}
 
 	@Override
