@@ -97,7 +97,7 @@ public class BuildThread implements Runnable{
 		//return null;
 		
 	}
-	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
+	/*@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
 	//public JSONObject CheckStatus(long buildid)
 	{
@@ -117,7 +117,7 @@ public class BuildThread implements Runnable{
 			e.printStackTrace();
 		}
 		return null;
-	}	
+	}*/	
 	
 		// TODO Auto-generated method stub
 		
