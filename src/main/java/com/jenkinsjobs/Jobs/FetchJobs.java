@@ -104,7 +104,7 @@ public class FetchJobs {
 		BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
 		b.run();
 	}
-	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
+	/*@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
 	//public JSONObject CheckStatus(long buildid)
 	{
@@ -124,7 +124,7 @@ public class FetchJobs {
 			e.printStackTrace();
 		}
 		return null;
-	}	
+	}	*/
 			
 	@RequestMapping(value="/Stopjobs",method=RequestMethod.GET)
 	public JSONObject StopJob() throws Exception 
