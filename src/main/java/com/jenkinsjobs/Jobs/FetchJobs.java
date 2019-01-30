@@ -101,7 +101,7 @@ public class FetchJobs {
 	{
 		JSONObject jsonobj = new JSONObject();	       
 		//JobStatus jobStat = service.createBuild(new JobStatus(buildname,"In Progress"));
-		jobsrepository.saveAndFlush(new JobStatus(buildname,"In Progress"));
+		JobStatus jobStat = jobsrepository.saveAndFlush(new JobStatus(buildname,"In Progress"));
 		//System.out.println("repo count :"+jobStat.getBuildname()+" "+jobStat.getBuildid()+" "+jobStat.getBuildstatus());
 		BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
 		b.run();
