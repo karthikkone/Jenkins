@@ -126,7 +126,7 @@ public class FetchJobs {
 			e.printStackTrace();
 		}
 		return null;
-	}	*/
+	}	
 			
 	@RequestMapping(value="/Stopjobs",method=RequestMethod.GET)
 	public JSONObject StopJob() throws Exception 
