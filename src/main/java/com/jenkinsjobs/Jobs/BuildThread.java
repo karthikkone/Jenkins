@@ -23,7 +23,7 @@ import com.offbytwo.jenkins.model.QueueReference;
 
 import net.sf.json.JSONObject;
 
-public class BuildThread{
+public class BuildThread implements Runnable {
 	
 	private String buildName;
 	private Long buildId;
@@ -31,16 +31,61 @@ public class BuildThread{
 	private static QueueReference queueRef;
 	private static QueueItem queueItem;	 
 	private static Session session;
+	
+	private JobStatusRepo jobsRepository;
 	public BuildThread()
 	{
 		
 	}
-	public BuildThread(long buildId,String buildName) {
+	public BuildThread(long buildId,String buildName, JobStatusRepo jobsRepository) {
 		this.buildId = buildId;
 		this.buildName = buildName;
+		this.jobsRepository = jobsRepository;
 	} 
-	
-	public void Start(SessionFactory s) {
+	@Override
+	public void run() {
+		try {
+			JenkinsServer jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
+			queueRef=jobinfo.build(true);
+			queueItem = jenkins.getQueueItem(queueRef);
+		    JSONObject jsonobj = new JSONObject();				
+			while (queueItem.getExecutable() == null) {		
+			       Thread.sleep(DEFAULT_RETRY_INTERVAL);
+			       queueItem = jenkins.getQueueItem(queueRef);
+			      
+			}
+			Build build = jenkins.getBuild(queueItem);				
+			while(build.details().isBuilding() == true)
+			{						 
+				continue;
+			}
+
+			//by now build has completed i.e succeded or failed
+
+			// build success
+			if(build.details().getResult() == build.details().getResult().SUCCESS) {
+				Optional<JobStatus> currentBuildRecord = this.jobsRepository.findById(buildId);
+				currentBuildRecord.ifPresent(currentBuild -> {
+					currentBuild.setBuildstatus("SUCCESS");
+					jobsRepository.saveAndFlush(currentBuild);
+				});
+			}
+
+			//build fail
+			if (build.details().getResult() == build.details().getResult().FAILURE) {
+				Optional<JobStatus> currentBuildRecord = this.jobsRepository.findById(buildId);
+				currentBuildRecord.ifPresent(currentBuild -> {
+					currentBuild.setBuildstatus("FAILURE");
+					jobsRepository.saveAndFlush(currentBuild);
+				});
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*public void StartWihSessionFactory(SessionFactory s) {
 		// TODO Auto-generated method stub
 		JenkinsServer jenkins;
 		SessionFactory sessionFactory = s;
@@ -104,7 +149,7 @@ public class BuildThread{
 			
 		//return null;
 		
-	}
+	}*/
 	/*public List<JobStatus> CheckStatus(SessionFactory s,long buildid)
 	{
 	    

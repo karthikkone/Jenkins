@@ -43,6 +43,8 @@ import com.offbytwo.jenkins.model.JobWithDetails;
 import com.offbytwo.jenkins.model.Queue;
 import com.offbytwo.jenkins.model.QueueItem;
 import com.offbytwo.jenkins.model.QueueReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @RestController
 public class FetchJobs {
 	
@@ -63,10 +65,13 @@ public class FetchJobs {
     //private AuthDataRepository  authDataRepository;
     private static SessionFactory sessionFactory;
     private static Session session;
-    
-	public FetchJobs()
-	{
-		
+	
+	private JobStatusRepo jobsRepository;
+	private final Logger logger = LoggerFactory.getLogger(FetchJobs.class);
+
+	@Autowired
+	public FetchJobs(JobStatusRepo repository) {
+		this.jobsRepository = repository;
 	}
 	
 	@RequestMapping(value="/jobs", method=RequestMethod.GET)
@@ -102,33 +107,36 @@ public class FetchJobs {
 	//public void StartJob(String buildname) throws Exception
 	{
 		String status;	
-		sessionFactory = new Configuration().configure().buildSessionFactory();
+		//sessionFactory = new Configuration().configure().buildSessionFactory();
 		JSONObject jsonobj = new JSONObject();	       
 		JobStatus jobStat = new JobStatus();
 		jobStat.setBuildname(buildname);
 		jobStat.setBuildstatus("In Progress");
-		System.out.println("buildname :"+jobStat.getBuildname());		
-		session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(jobStat);       
-		session.getTransaction().commit();
-		List<JobStatus> jobs1 = session.createQuery("FROM JobStatus").list();
+		System.out.println("buildname :"+jobStat.getBuildname());
+		
+		
+		//session = sessionFactory.openSession();
+		//session.beginTransaction();
+		//session.save(jobStat);       
+		//session.getTransaction().commit();
+		JobStatus selectedJob = jobsRepository.saveAndFlush(jobStat);
+		//List<JobStatus> jobs1 = session.createQuery("FROM JobStatus").list();
         //jobs.forEach((x) -> System.out.printf("- %s%n", x));        
 		jsonobj.put("Build id", jobStat.getBuildid());
 		jsonobj.put("Build Name", jobStat.getBuildname());
 		jsonobj.put("Build Status", jobStat.getBuildstatus());
-        for(int i=0;i<jobs1.size();i++)
-        {
-        	System.err.println("jobs in array :"+jobs1.get(i).getBuildid()+" "+jobs1.get(i).getBuildname()+" "+jobs1.get(i).getBuildstatus());
-        }
-		BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
-		b.Start(sessionFactory);
-		List<JobStatus> jobs2 = session.createQuery("FROM JobStatus where buildid="+jobStat.getBuildid()).list();
+        // for(int i=0;i<jobs1.size();i++)
+        // {
+        	// System.err.println("jobs in array :"+jobs1.get(i).getBuildid()+" "+jobs1.get(i).getBuildname()+" "+jobs1.get(i).getBuildstatus());
+        // }
+		Thread b= new Thread(new BuildThread(selectedJob.getBuildid(),buildname,jobsRepository));
+		b.start();
+		//List<JobStatus> jobs2 = session.createQuery("FROM JobStatus where buildid="+jobStat.getBuildid()).list();
 		//java.util.List<JobStatus> jobs=CheckStatus(jobStat.getBuildid());
-		for(int i=0;i<jobs1.size();i++)
-        {
-        	System.err.println("Status of build :"+jobs2.get(i).getBuildid()+" "+jobs2.get(i).getBuildname()+" " +jobs2.get(i).getBuildstatus());
-        }
+		//for(int i=0;i<jobs1.size();i++)
+//        {
+        	//System.err.println("Status of build :"+jobs2.get(i).getBuildid()+" "+jobs2.get(i).getBuildname()+" " +jobs2.get(i).getBuildstatus());
+//        }
 		//status=b.Start(sessionFactory);
 		//jobStat.setBuildstatus(status);
 		//List<JobStatus> jobs = session.createQuery("FROM JobStatus").list();
@@ -137,9 +145,9 @@ public class FetchJobs {
         {
         	System.err.println("jobs in array :"+jobs.get(i).getBuildid()+" "+jobs.get(i).getBuildname()+" "+jobs.get(i).getBuildstatus());
         }	    */
-		jsonobj.put("Buildid",jobs2.get(0).getBuildid());
-		jsonobj.put("Buildname",jobs2.get(0).getBuildname());
-		jsonobj.put("Buildstatus",jobs2.get(0).getBuildstatus());
+//		jsonobj.put("Buildid",jobs2.get(0).getBuildid());
+//		jsonobj.put("Buildname",jobs2.get(0).getBuildname());
+//		jsonobj.put("Buildstatus",jobs2.get(0).getBuildstatus());
 		return jsonobj;
 	}
 	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	

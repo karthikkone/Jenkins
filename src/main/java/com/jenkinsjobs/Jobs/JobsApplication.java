@@ -25,8 +25,8 @@ public class JobsApplication {
 	public static void main(String[] args) throws URISyntaxException {
 		SpringApplication.run(JobsApplication.class, args);
 		
-		FetchJobs obj = new FetchJobs();		
-		try {
+		//FetchJobs obj = new FetchJobs();		
+//		try {
 			//JSONObject jarray = obj.getJobs();
 			/*for(int i=0;i<jarray.size();i++)
 			{
@@ -41,10 +41,10 @@ public class JobsApplication {
 			//obj.StartJob("Salesforce_retrieve");
 		
 			
-		} catch (Exception e) {
+//		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//			e.printStackTrace();
+//		}
 		
 	}
 }
