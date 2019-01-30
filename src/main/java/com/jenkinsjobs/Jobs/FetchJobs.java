@@ -135,9 +135,9 @@ public class FetchJobs {
         {
         	System.err.println("jobs in array :"+jobs.get(i).getBuildid()+" "+jobs.get(i).getBuildname()+" "+jobs.get(i).getBuildstatus());
         }	    */
-		Jsonobj.put("Buildid",jobs2.get(0).getBuildid());
-		Jsonobj.put("Buildid",jobs2.get(0).getBuildname());
-		Jsonobj.put("Buildid",jobs2.get(0).getBuildstatus());
+		jsonobj.put("Buildid",jobs2.get(0).getBuildid());
+		jsonobj.put("Buildname",jobs2.get(0).getBuildname());
+		jsonobj.put("Buildstatus",jobs2.get(0).getBuildstatus());
 		return jsonobj;
 	}
 	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
