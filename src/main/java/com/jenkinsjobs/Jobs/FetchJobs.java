@@ -63,9 +63,10 @@ public class FetchJobs {
     //private AuthDataRepository  authDataRepository;
     private static SessionFactory sessionFactory;
     private static Session session;
+    sessionFactory = new Configuration().configure().buildSessionFactory();
 	public FetchJobs()
 	{
-		sessionFactory = new Configuration().configure().buildSessionFactory();
+		
 	}
 	
 	@RequestMapping(value="/jobs", method=RequestMethod.GET)
