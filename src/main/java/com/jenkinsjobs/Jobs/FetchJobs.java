@@ -135,7 +135,10 @@ public class FetchJobs {
         {
         	System.err.println("jobs in array :"+jobs.get(i).getBuildid()+" "+jobs.get(i).getBuildname()+" "+jobs.get(i).getBuildstatus());
         }	    */
-		//return jsonobj;
+		Jsonobj.put("Buildid",jobs2.get(0).getBuildid());
+		Jsonobj.put("Buildid",jobs2.get(0).getBuildname());
+		Jsonobj.put("Buildid",jobs2.get(0).getBuildstatus());
+		return jsonobj;
 	}
 	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("buildid") String buildid) throws Exception 
