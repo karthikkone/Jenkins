@@ -156,9 +156,12 @@ public class FetchJobs {
 	        //{
 				System.out.println("result in checkstatus:"+jobs1.get(0).getBuildid()+jobs1.get(0).getBuildstatus());
 			//Jsonobj.put("Result", jobs1.get(i).getBuildstatus());
-	       // }
-			//return Jsonobj;
-			return jobs1;
+	       // }     
+		        Jsonobj.put("Buildid",jobs1.get(0).getBuildid());
+			Jsonobj.put("Buildid",jobs1.get(0).getBuildname());
+			Jsonobj.put("Buildid",jobs1.get(0).getBuildstatus());
+			return Jsonobj;
+			//return jobs1;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
