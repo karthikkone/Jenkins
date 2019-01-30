@@ -6,3 +6,4 @@ public interface BuildService {
     JobStatus updateBuild(JobStatus job);
     long getCount();
 }
+*/
