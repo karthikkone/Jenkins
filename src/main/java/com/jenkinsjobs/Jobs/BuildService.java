@@ -1,4 +1,4 @@
-package com.jenkinsjobs.Jobs;
+/*package com.jenkinsjobs.Jobs;
 
 public interface BuildService {
     JobStatus createBuild(JobStatus job);
