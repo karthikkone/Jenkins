@@ -1,4 +1,4 @@
-/*package com.jenkinsjobs.Jobs;
+package com.jenkinsjobs.Jobs;
 
 public interface BuildService {
     JobStatus createBuild(JobStatus job);
@@ -6,4 +6,4 @@ public interface BuildService {
     JobStatus updateBuild(JobStatus job);
     long getCount();
 }
-*/
+
