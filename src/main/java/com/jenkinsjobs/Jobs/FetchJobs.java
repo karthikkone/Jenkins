@@ -65,7 +65,8 @@ public class FetchJobs {
     private static Session session;
     @Autowired
     private BuildService service;
-	
+    @Autowired
+    private JobStatusRepo jobsrepository;
 	@RequestMapping(value="/jobs", method=RequestMethod.GET)
 	public JSONObject getJobs() throws Exception 
 	{
@@ -104,7 +105,7 @@ public class FetchJobs {
 		BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
 		b.run();
 	}
-	/*@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
+	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
 	//public JSONObject CheckStatus(long buildid)
 	{
@@ -113,7 +114,8 @@ public class FetchJobs {
 		JSONObject Jsonobj = new JSONObject();
 		//SessionFactory sessionFactory = s;
 		
-			JobStatus job = service.getbuild(buildid);		
+			//JobStatus job = service.getbuild(buildid);	
+			JobStatus job = jobsrepository.getOne(buildid);
 			Jsonobj.put("Buildid", job.getBuildid());
 			Jsonobj.put("Buildname", job.getBuildname());
 			Jsonobj.put("Buildstatus", job.getBuildstatus());
