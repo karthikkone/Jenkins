@@ -96,9 +96,9 @@ public class FetchJobs {
 		}
 	}
 	
-	//@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
-	//public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
-	public void StartJob(String buildname) throws Exception
+	@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
+	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
+	//public void StartJob(String buildname) throws Exception
 	{
 		String status;		
 		JSONObject jsonobj = new JSONObject();	       
@@ -137,9 +137,9 @@ public class FetchJobs {
         }	    */
 		//return jsonobj;
 	}
-	//@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
-	//public JSONObject CheckStatus(@RequestParam("buildid") String queueid) throws Exception 
-	public List<JobStatus> CheckStatus(long buildid)
+	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
+	public JSONObject CheckStatus(@RequestParam("buildid") String queueid) throws Exception 
+	//public List<JobStatus> CheckStatus(long buildid)
 	{
 		//SessionFactory sessionFactory = s;
 		session = sessionFactory.getCurrentSession();
