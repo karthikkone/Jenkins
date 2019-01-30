@@ -14,9 +14,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
 //import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.offbytwo.jenkins.JenkinsServer;
 import com.offbytwo.jenkins.model.Build;
@@ -26,17 +23,14 @@ import com.offbytwo.jenkins.model.QueueReference;
 
 import net.sf.json.JSONObject;
 
-public class BuildThread implements Runnable{
+public class BuildThread{
 	
 	private String buildName;
 	private Long buildId;
 	private static final Long DEFAULT_RETRY_INTERVAL = 200L;
 	private static QueueReference queueRef;
 	private static QueueItem queueItem;	 
-	 @Autowired
-	    private BuildService service;
-	 @Autowired
-	 private JobStatusRepo jobsrepo;
+	private static Session session;
 	public BuildThread()
 	{
 		
@@ -46,15 +40,19 @@ public class BuildThread implements Runnable{
 		this.buildName = buildName;
 	} 
 	
-	@Override
-	public void run() {
+	public void Start(SessionFactory s) {
 		// TODO Auto-generated method stub
 		JenkinsServer jenkins;
+		SessionFactory sessionFactory = s;
 		try {
-					 
-			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
-			queueRef=jobinfo.build(true);			
-		    queueItem = jenkins.getQueueItem(queueRef);	
+			//jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");		
+			 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "Infy1234");
+			 JobWithDetails jobinfo = jenkins.getJob(this.buildName);
+			queueRef=jobinfo.build(true);	
+			session = sessionFactory.openSession();
+			//CreateBuildInDB(sessionFactory,1,this.buildName,"In Progress");
+		    queueItem = jenkins.getQueueItem(queueRef);
+		    JSONObject jsonobj = new JSONObject();				
 			while (queueItem.getExecutable() == null) {		
 			       Thread.sleep(DEFAULT_RETRY_INTERVAL);
 			       queueItem = jenkins.getQueueItem(queueRef);
@@ -65,30 +63,39 @@ public class BuildThread implements Runnable{
 			{						 
 				continue;
 			}
-			JobStatus job = service.getbuild(this.buildId);
-			System.out.println("job :"+job.getBuildname());
-			//Optional<JobStatus> jobstatus = jobsrepo.findById(buildId);			
+			
 			if(build.details().getResult() == build.details().getResult().SUCCESS)
-			{					
-				job.setBuildstatus("SUCCESS");
-				service.updateBuild(job);
-				
-				/*jobstatus.ifPresent(currentBuild -> {
-					currentBuild.setBuildstatus("SUCCESS");
-					jobsrepo.saveAndFlush(currentBuild);
-				});*/
-				
+			{	
+				System.out.println("inside success");
+				String Updatequery= "UPDATE JobStatus set buildstatus = :buildstatus "+"WHERE buildid = :buildid";
+				System.out.println("value in updatequry :"+Updatequery);
+				org.hibernate.query.Query Update= session.createQuery(Updatequery);
+				Update.setParameter("buildstatus", "Successfully Completed");
+				Update.setParameter("buildid", this.buildId);
+				session.beginTransaction();
+				int result = Update.executeUpdate();
+				session.getTransaction().commit();
+				System.out.println("Rows affected: " + result);
+				List<JobStatus> jobs1 = session.createQuery("FROM JobStatus where buildid="+this.buildId).list();
+			    System.out.println("result :"+jobs1.get(0).getBuildstatus());
+				//Jsonobj.put("Result", jobs1.get(i).getBuildstatus());
+		       
+				//return "Successfully Completed";
 			}
 			else if (build.details().getResult() == build.details().getResult().FAILURE) {
-				
-				job.setBuildstatus("FAILURE");
-				service.updateBuild(job);
-				
-				/*jobstatus.ifPresent(currentBuild -> {
-					currentBuild.setBuildstatus("FAILURE");
-					jobsrepo.saveAndFlush(currentBuild);
-				});*/
-				
+				System.out.println("inside Failed");
+				String Updatequery= "UPDATE JobStatus set buildstatus = :buildstatus "+"WHERE buildid = :buildid";
+				System.out.println("value in updatequry :"+Updatequery);
+				org.hibernate.query.Query Update= session.createQuery(Updatequery);
+				Update.setParameter("buildstatus", "Failed");
+				Update.setParameter("buildid", this.buildId);
+				session.beginTransaction();
+				int result = Update.executeUpdate();
+				session.getTransaction().commit();
+				System.out.println("Rows affected: " + result);
+				List<JobStatus> jobs1 = session.createQuery("FROM JobStatus where buildid="+this.buildId).list();
+			    System.out.println("result :"+jobs1.get(0).getBuildstatus());
+				//return "build Failed";
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -98,30 +105,28 @@ public class BuildThread implements Runnable{
 		//return null;
 		
 	}
-	/*@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
-	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
-	//public JSONObject CheckStatus(long buildid)
+	/*public List<JobStatus> CheckStatus(SessionFactory s,long buildid)
 	{
-		try
-		{
-		JSONObject Jsonobj = new JSONObject();
-		//SessionFactory sessionFactory = s;
-		
-			JobStatus job = service.getbuild(buildid);		
-			Jsonobj.put("Buildid", job.getBuildid());
-			Jsonobj.put("Buildname", job.getBuildname());
-			Jsonobj.put("Buildstatus", job.getBuildstatus());
-			return Jsonobj;
-		}
-		catch(Exception e)
-		{
+	    
+		try {
+			JSONObject Jsonobj=new JSONObject();
+			SessionFactory sessionFactory = s;
+			session = sessionFactory.openSession();
+			List<JobStatus> jobs1 = session.createQuery("FROM JobStatus where buildid="+buildid).list();
+			for(int i=0;i<jobs1.size();i++)
+	        {
+				System.out.println("result :"+jobs1.get(i).getBuildstatus());
+			//Jsonobj.put("Result", jobs1.get(i).getBuildstatus());
+	        }
+			//return Jsonobj;
+			return jobs1;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}							
 		return null;
-	}*/	
+	}	*/
 	
-		// TODO Auto-generated method stub
-		
-	}
+}
 	
 
