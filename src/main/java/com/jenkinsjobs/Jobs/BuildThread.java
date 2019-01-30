@@ -46,7 +46,7 @@ public class BuildThread{
 		SessionFactory sessionFactory = s;
 		try {
 			//jenkins = new JenkinsServer(new URI("http://localhost:8080/"), "kit", "kit");		
-			 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "Infy1234");
+			 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
 			 JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			queueRef=jobinfo.build(true);	
 			session = sessionFactory.openSession();
