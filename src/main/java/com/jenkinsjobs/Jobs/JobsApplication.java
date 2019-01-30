@@ -20,12 +20,12 @@ import antlr.collections.List;
 @SpringBootApplication
 //@EnableJpaRepositories("com.jenkinsjobs.Jobs")
 public class JobsApplication {
-	 private static JobStatus authDataRepository;
+	 //private static JobStatus authDataRepository;
 	 
 	public static void main(String[] args) throws URISyntaxException {
 		SpringApplication.run(JobsApplication.class, args);
 		
-		//FetchJobs obj = new FetchJobs();		
+		FetchJobs obj = new FetchJobs();		
 		try {
 			//JSONObject jarray = obj.getJobs();
 			/*for(int i=0;i<jarray.size();i++)
