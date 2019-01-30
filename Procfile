@@ -1,1 +1,1 @@
-web: java -Dheroku=true -Dserver.port=$PORT -jar target/Jobs-0.0.1-SNAPSHOT.jar --spring.jpa.show-sql=$SHOW_SQL --spring.datasource.url=$JDBC_DATABASE_URL --spring.datasource.username=$JDBC_DATABASE_USERNAME --spring.datasource.password=$JDBC_DATABASE_PASSWORD
+web: java -Dheroku=true -Dserver.port=$PORT -jar target/Jobs-0.0.1-SNAPSHOT.jar --spring.jpa.show-sql=$SHOW_SQL --spring.datasource.url=$DATABASE_URL --spring.datasource.username=$JDBC_DATABASE_USERNAME --spring.datasource.password=$JDBC_DATABASE_PASSWORD
