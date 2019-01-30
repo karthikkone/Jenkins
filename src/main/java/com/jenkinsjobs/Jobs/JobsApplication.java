@@ -18,7 +18,7 @@ import com.offbytwo.jenkins.model.BuildWithDetails;
 import antlr.collections.List;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.jenkinsjobs.Jobs")
+//@EnableJpaRepositories("com.jenkinsjobs.Jobs")
 public class JobsApplication {
 	 private static JobStatus authDataRepository;
 	 
