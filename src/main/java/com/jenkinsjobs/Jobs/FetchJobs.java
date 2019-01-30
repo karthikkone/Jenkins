@@ -63,7 +63,7 @@ public class FetchJobs {
     //private AuthDataRepository  authDataRepository;
     private static SessionFactory sessionFactory;
     private static Session session;
-    sessionFactory = new Configuration().configure().buildSessionFactory();
+    
 	public FetchJobs()
 	{
 		
@@ -101,7 +101,8 @@ public class FetchJobs {
 	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
 	//public void StartJob(String buildname) throws Exception
 	{
-		String status;		
+		String status;	
+		sessionFactory = new Configuration().configure().buildSessionFactory();
 		JSONObject jsonobj = new JSONObject();	       
 		JobStatus jobStat = new JobStatus();
 		jobStat.setBuildname(buildname);
@@ -146,7 +147,7 @@ public class FetchJobs {
 	//public List<JobStatus> CheckStatus(long buildid)
 	{
 		//SessionFactory sessionFactory = s;
-		session = sessionFactory.getCurrentSession();
+		//session = sessionFactory.getCurrentSession();
 		try {
 			JSONObject Jsonobj=new JSONObject();
 			if (!session.isOpen()) 
