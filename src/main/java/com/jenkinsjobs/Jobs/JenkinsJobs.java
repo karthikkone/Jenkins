@@ -71,7 +71,7 @@ public class JenkinsJobs {
      private final Logger logger = LoggerFactory.getLogger(FetchJobs.class);
 
 	@Autowired
-	public FetchJobs(JobStatusRepo repository) {
+	public JenkinsJobs(JobStatusRepo repository) {
 		this.jobsRepository = repository;
 	}
 	
