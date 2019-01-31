@@ -68,7 +68,7 @@ public class JenkinsJobs {
     /*@Autowired
     private JobStatusRepo jobsrepository;*/
      private JobStatusRepo jobsRepository;
-     private final Logger logger = LoggerFactory.getLogger(FetchJobs.class);
+     private final Logger logger = LoggerFactory.getLogger(JenkinsJobs.class);
 
 	@Autowired
 	public JenkinsJobs(JobStatusRepo repository) {
