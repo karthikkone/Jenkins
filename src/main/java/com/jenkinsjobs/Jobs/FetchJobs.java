@@ -168,8 +168,8 @@ public class FetchJobs {
 		//SessionFactory sessionFactory = s;
 		
 			//JobStatus job = service.getbuild(buildid);	
-			//JobStatus job = jobsrepository.getOne(buildid);
-			JobStatus job = jobsRepository.getOne(buildid);
+			JobStatus job = jobsrepository.getOne(buildid);
+			//JobStatus job = jobsRepository.getOne(buildid);
 			Jsonobj.put("Buildid", job.getBuildid());
 			Jsonobj.put("Buildname", job.getBuildname());
 			Jsonobj.put("Buildstatus", job.getBuildstatus());
