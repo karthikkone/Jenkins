@@ -62,11 +62,12 @@ public class FetchJobs {
     boolean flag=false;
     private static QueueReference queueRef;
     private static QueueItem queueItem;
-    private JobStatusRepo Repo;
+    //private JobStatusRepo Repo;
     private static SessionFactory sessionFactory;
     private static Session session;
-	
-     private JobStatusRepo jobsRepository;
+    @Autowired
+    private JobStatusRepo jobsrepository;
+     //private JobStatusRepo jobsRepository;
      private final Logger logger = LoggerFactory.getLogger(FetchJobs.class);
 
 	@Autowired
@@ -74,8 +75,8 @@ public class FetchJobs {
 		this.jobsRepository = repository;
 	}
 	
-    @Autowired
-    private JobStatusRepo jobsrepository;
+    /*@Autowired
+    private JobStatusRepo jobsrepository;*/
 	@RequestMapping(value="/jobs", method=RequestMethod.GET)
 	public JSONObject getJobs() throws Exception 
 	{
