@@ -106,7 +106,7 @@ public class FetchJobs {
 	}
 	
 	@RequestMapping(value="/Startjobs",params={"buildname"},method=RequestMethod.GET)	
-	public void StartJob(@RequestParam("buildname") String buildname) throws Exception 
+	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
 	//public void StartJob(String buildname) throws Exception
 	{
 		String status;	
@@ -125,9 +125,9 @@ public class FetchJobs {
 		JobStatus selectedJob = jobsRepository.saveAndFlush(jobStat);
 		//List<JobStatus> jobs1 = session.createQuery("FROM JobStatus").list();
         //jobs.forEach((x) -> System.out.printf("- %s%n", x));        
-		jsonobj.put("Build id", jobStat.getBuildid());
-		jsonobj.put("Build Name", jobStat.getBuildname());
-		jsonobj.put("Build Status", jobStat.getBuildstatus());
+		jsonobj.put("Buildid", selectedJob.getBuildid());
+		jsonobj.put("Buildname", selectedJob.getBuildname());
+		jsonobj.put("Buildstatus", selectedJob.getBuildstatus());
         // for(int i=0;i<jobs1.size();i++)
         // {
         	// System.err.println("jobs in array :"+jobs1.get(i).getBuildid()+" "+jobs1.get(i).getBuildname()+" "+jobs1.get(i).getBuildstatus());
@@ -157,6 +157,7 @@ public class FetchJobs {
 		//System.out.println("repo count :"+jobStat.getBuildname()+" "+jobStat.getBuildid()+" "+jobStat.getBuildstatus());
 		//BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
 		//b.run();
+		return jsonobj;
 	}
 	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
