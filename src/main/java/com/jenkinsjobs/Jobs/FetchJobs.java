@@ -46,7 +46,7 @@ import com.offbytwo.jenkins.model.QueueReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 @RestController
-public class FetchJobs {
+public class JenkinsJobs {
 	
 	@Value("${jobs.url}")
     private String Url;
