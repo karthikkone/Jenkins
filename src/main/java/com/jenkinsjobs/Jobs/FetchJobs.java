@@ -67,7 +67,7 @@ public class FetchJobs {
     private static Session session;
     /*@Autowired
     private JobStatusRepo jobsrepository;*/
-     //private JobStatusRepo jobsRepository;
+     private JobStatusRepo jobsRepository;
      private final Logger logger = LoggerFactory.getLogger(FetchJobs.class);
 
 	@Autowired
