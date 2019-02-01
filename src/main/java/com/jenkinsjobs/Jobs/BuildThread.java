@@ -50,7 +50,7 @@ public class BuildThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			JenkinsServer jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+			
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			queueRef=jobinfo.build(true);
 			queueItem = jenkins.getQueueItem(queueRef);
@@ -97,7 +97,7 @@ public class BuildThread implements Runnable {
 		// TODO Auto-generated method stub
 		JenkinsServer jenkins;
 		try {
-			 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");		 
+			 	 
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			queueRef=jobinfo.build(true);			
 		    queueItem = jenkins.getQueueItem(queueRef);	
