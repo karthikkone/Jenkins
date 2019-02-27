@@ -124,12 +124,19 @@ public class JenkinsJobs {
 	             //{
 	            	// Node ParamType1 = ParamTypes.item(k);
 	            	//Node ParamType1 = ParamTypes.item(0);
+	            	if(ParamType != null)
+	            	{
 	            	if(ParamType.hasChildNodes())
 	            	{
-	            	 Node ParamName1 = ParamType.getChildNodes().item(0).getNextSibling();
+	            	 Node ParamName1 = ParamType.getChildNodes().item(0).getNextSibling();	            	 
 	            	 System.out.println("ParamName in paramtypes:"+ParamName1.getNodeName());
 	            	 System.out.println("ParamValues in paramtypes:"+ParamName1.getChildNodes().item(0).getNodeValue());
 	            	 //Params.put(ParamName1.getChildNodes().item(0).getNodeValue(), "");
+	            	}
+	            	}
+	            	else
+	            	{
+	            		break;
 	            	}
 	             //}
 	           
