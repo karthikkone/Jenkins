@@ -31,14 +31,14 @@ import org.slf4j.LoggerFactory;
 @RestController
 public class JenkinsJobs {
 	
-	@Value("${jobs.url}")
+	/*@Value("${jobs.url}")
     private String Url;
 
     @Value("${jobs.username}")
     private String Username;
 
     @Value("${jobs.password}")
-    private String password;
+    private String password;*/
     public JenkinsServer jenkins;
     //private final Long retryInterval;
     private static final Long DEFAULT_RETRY_INTERVAL = 200L;
@@ -204,4 +204,28 @@ public class JenkinsJobs {
 		}
 	
 	}
+	
+	public org.w3c.dom.Document convertStringToXMLDocument(String xmlString)
+    {
+        //Parser that produces DOM object trees from XML content
+		
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+         
+        //API to obtain DOM Document instance
+        DocumentBuilder builder = null;
+        try
+        {
+            //Create DocumentBuilder with default configuration
+            builder = factory.newDocumentBuilder();             
+            //Parse the content to Document object
+            //String jobxml = jenkins.getJobXml(buildname);
+            org.w3c.dom.Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
+            return doc;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
