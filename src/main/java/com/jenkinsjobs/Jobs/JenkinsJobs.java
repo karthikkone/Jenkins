@@ -131,7 +131,7 @@ public class JenkinsJobs {
 	            	 Node ParamName1 = ParamType.getChildNodes().item(0).getNextSibling();	            	 
 	            	 System.out.println("ParamName in paramtypes:"+ParamName1.getNodeName());
 	            	 System.out.println("ParamValues in paramtypes:"+ParamName1.getChildNodes().item(0).getNodeValue());
-	            	 //Params.put(ParamName1.getChildNodes().item(0).getNodeValue(), "");
+	            	 Params.put(ParamName1.getChildNodes().item(0).getNodeValue(), "");
 	            	}
 	            	}
 	            	else
