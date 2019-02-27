@@ -109,28 +109,33 @@ public class JenkinsJobs {
 		System.out.println("XML :"+jobxml);	
 		org.w3c.dom.Document doc = convertStringToXMLDocument(jobxml);	
 		NodeList list = doc.getElementsByTagName("parameterDefinitions");
-	    for (int i=0; i< list.getLength(); i++) {	    	
+	    	for (int i=0; i< list.getLength(); i++) {	    	
 	        Node Param = list.item(i);
-            System.out.println("list size :"+list.getLength());
+            	System.out.println("list size :"+list.getLength());
 	        if(Param.hasChildNodes()){	        	
 	        	
 	            for(int j=0; j< Param.getChildNodes().getLength(); j++)
 	        	{
 	            	Node ParamType = Param.getChildNodes().item(j).getNextSibling();		            	
 	            	//System.out.println("param types in loop :"+ParamType.getChildNodes().item(0).getNodeName());
-	            NodeList ParamTypes = doc.getElementsByTagName(ParamType.getNodeName());
-	             for(int k=0;k<ParamTypes.getLength();k++)
-	             {
-	            	 Node ParamType1 = ParamTypes.item(k);
-	            	 Node ParamName1 = ParamType1.getChildNodes().item(0).getNextSibling();
+	            //NodeList ParamTypes = doc.getElementsByTagName(ParamType.getNodeName());
+	            //System.out.println("ParamTypes  ka length :"+ParamTypes.getLength());
+	             //for(int k=0;k<ParamTypes.getLength();k++)
+	             //{
+	            	// Node ParamType1 = ParamTypes.item(k);
+	            	//Node ParamType1 = ParamTypes.item(0);
+	            	if(ParamType.hasChildNodes())
+	            	{
+	            	 Node ParamName1 = ParamType.getChildNodes().item(0).getNextSibling();
 	            	 System.out.println("ParamName in paramtypes:"+ParamName1.getNodeName());
 	            	 System.out.println("ParamValues in paramtypes:"+ParamName1.getChildNodes().item(0).getNodeValue());
-	            	 Params.put(ParamName1.getChildNodes().item(0).getNodeValue(), "");
-	             }
+	            	 //Params.put(ParamName1.getChildNodes().item(0).getNodeValue(), "");
+	            	}
+	             //}
 	           
 	        	}
-	        }
-	    }
+	         }
+	   	}
 		  
 		System.out.println("After converting string to xml :"+doc.getFirstChild().getNodeName());	
 		JobStatus jobStat = new JobStatus();
