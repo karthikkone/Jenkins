@@ -23,15 +23,16 @@ public class JobsApplication {
 	 //private static JobStatus authDataRepository;
 	 
 	public static void main(String[] args) throws URISyntaxException {
+		public static void main(String[] args) throws URISyntaxException {
 		SpringApplication.run(JobsApplication.class, args);
 		
-		//FetchJobs obj = new FetchJobs();		
-//		try {
-			//JSONObject jarray = obj.getJobs();
-			/*for(int i=0;i<jarray.size();i++)
+		JenkinsJobs obj = new JenkinsJobs();		
+		try {
+			JSONObject jarray = obj.getJobs();
+			for(int i=0;i<jarray.size();i++)
 			{
 				System.out.println(jarray.toString(i));
-			}*/
+			}
 			//obj.StartJob("testjob1");
 			//java.util.List<JobStatus> jobs1=obj.CheckStatus(1);
 			/*for(int i=0;i<jobs1.size();i++)
@@ -41,10 +42,10 @@ public class JobsApplication {
 			//obj.StartJob("Salesforce_retrieve");
 		
 			
-//		} catch (Exception e) {
+	} catch (Exception e) {
 			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
+		e.printStackTrace();
+    }
+	
 	}
 }
