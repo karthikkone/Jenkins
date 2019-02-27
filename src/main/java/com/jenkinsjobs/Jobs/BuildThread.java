@@ -44,6 +44,8 @@ public class BuildThread implements Runnable {
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			if(JobParams.size()>0)
 			{
+				System.out.println("params :"+JobParams.keySet());
+				System.out.println("param values :"+JobParams.values());
 				queueRef=jobinfo.build(JobParams, true);
 			}
 			else
