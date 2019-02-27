@@ -70,7 +70,7 @@ public class JenkinsJobs {
 	public JSONObject getJobs() throws Exception 
 	{
 		 try {	         
-		 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+		 
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
 	         //System.out.println("new jobs... :"+jobs);
@@ -102,8 +102,8 @@ public class JenkinsJobs {
 		//List<String> Params = new ArrayList<String>();
 		HashMap<String, String>  Params = new HashMap<String, String>();
 		//JSONObject config = ConfigParser.parseConfigFile("C:\\Users\\kirti.annajigar\\Workspace\\Jenkins-JPA-master\\src\\main\\resources\\config.xml");
-		//jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
-	        jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+		//jenkins =
+	       
 		JobWithDetails jobinfo = jenkins.getJob(buildname);
 		String jobxml = jenkins.getJobXml(buildname);		
 		System.out.println("XML :"+jobxml);	
