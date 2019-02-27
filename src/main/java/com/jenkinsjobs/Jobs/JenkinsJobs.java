@@ -109,55 +109,50 @@ public class JenkinsJobs {
 	public JSONObject StartJob(@RequestParam("buildname") String buildname) throws Exception 
 	//public void StartJob(String buildname) throws Exception
 	{
-		String status;	
-		//sessionFactory = new Configuration().configure().buildSessionFactory();
-		JSONObject jsonobj = new JSONObject();	       
+		try {
+		JSONObject Jsonobj = new JSONObject();	 
+		//List<String> Params = new ArrayList<String>();
+		HashMap<String, String>  Params = new HashMap<String, String>();
+		//JSONObject config = ConfigParser.parseConfigFile("C:\\Users\\kirti.annajigar\\Workspace\\Jenkins-JPA-master\\src\\main\\resources\\config.xml");
+		jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");		
+		JobWithDetails jobinfo = jenkins.getJob(buildname);
+		String jobxml = jenkins.getJobXml(buildname);		
+		System.out.println("XML :"+jobxml);	
+		org.w3c.dom.Document doc = convertStringToXMLDocument(jobxml);	
+		NodeList list = doc.getDocumentElement().getElementsByTagName("name");		
+		NodeList subList =null;
+		String subListattribute =null;
+		String subListvalue =null;
+		System.out.println("list.getLength() :"+list.getLength());
+		 if (list != null && list.getLength() > 0) {
+			 for(int i=0;i<list.getLength();i++)
+			 {
+			 	subList = list.item(i).getChildNodes();					 	
+	            subListvalue = subList.item(0).getNodeValue();
+	            System.out.println("sublist value :"+subListvalue);  	
+	            Params.put(subListvalue, "");
+			 }
+		 }	 
+		  
+		System.out.println("After converting string to xml :"+doc.getFirstChild().getNodeName());	
 		JobStatus jobStat = new JobStatus();
 		jobStat.setBuildname(buildname);
-		jobStat.setBuildstatus("In Progress");
-		System.out.println("buildname :"+jobStat.getBuildname());
-		
-		
-		//session = sessionFactory.openSession();
-		//session.beginTransaction();
-		//session.save(jobStat);       
-		//session.getTransaction().commit();
-		JobStatus selectedJob = jobsRepository.saveAndFlush(jobStat);
-		//List<JobStatus> jobs1 = session.createQuery("FROM JobStatus").list();
-        //jobs.forEach((x) -> System.out.printf("- %s%n", x));        
-		jsonobj.put("Buildid", selectedJob.getBuildid());
-		jsonobj.put("Buildname", selectedJob.getBuildname());
-		jsonobj.put("Buildstatus", selectedJob.getBuildstatus());
-        // for(int i=0;i<jobs1.size();i++)
-        // {
-        	// System.err.println("jobs in array :"+jobs1.get(i).getBuildid()+" "+jobs1.get(i).getBuildname()+" "+jobs1.get(i).getBuildstatus());
-        // }
-		Thread b= new Thread(new BuildThread(selectedJob.getBuildid(),buildname,jobsRepository));
+		jobStat.setBuildstatus("In Progress");	
+		JobStatus selectedJob = jobsRepository.saveAndFlush(jobStat);   
+		Jsonobj.put("Buildid", selectedJob.getBuildid());
+		Jsonobj.put("Buildname", selectedJob.getBuildname());
+		Jsonobj.put("Buildstatus", selectedJob.getBuildstatus());
+		Jsonobj.put("BuildParams",Params);
+		Thread b= new Thread(new BuildThread(selectedJob.getBuildid(),buildname,jobsRepository,Params));
 		b.start();
-		//List<JobStatus> jobs2 = session.createQuery("FROM JobStatus where buildid="+jobStat.getBuildid()).list();
-		//java.util.List<JobStatus> jobs=CheckStatus(jobStat.getBuildid());
-		//for(int i=0;i<jobs1.size();i++)
-//        {
-        	//System.err.println("Status of build :"+jobs2.get(i).getBuildid()+" "+jobs2.get(i).getBuildname()+" " +jobs2.get(i).getBuildstatus());
-//        }
-		//status=b.Start(sessionFactory);
-		//jobStat.setBuildstatus(status);
-		//List<JobStatus> jobs = session.createQuery("FROM JobStatus").list();
-        //jobs.forEach((x) -> System.out.printf("- %s%n", x));          
-        /*for(int i=0;i<jobs.size();i++)
-        {
-        	System.err.println("jobs in array :"+jobs.get(i).getBuildid()+" "+jobs.get(i).getBuildname()+" "+jobs.get(i).getBuildstatus());
-        }	    */
-//		jsonobj.put("Buildid",jobs2.get(0).getBuildid());
-//		jsonobj.put("Buildname",jobs2.get(0).getBuildname());
-//		jsonobj.put("Buildstatus",jobs2.get(0).getBuildstatus());
-		//JSONObject jsonobj = new JSONObject();	       
-		//JobStatus jobStat = service.createBuild(new JobStatus(buildname,"In Progress"));
-		//JobStatus jobStat = jobsrepository.saveAndFlush(new JobStatus(buildname,"In Progress"));
-		//System.out.println("repo count :"+jobStat.getBuildname()+" "+jobStat.getBuildid()+" "+jobStat.getBuildstatus());
-		//BuildThread b= new BuildThread(jobStat.getBuildid(),buildname);
-		//b.run();
-		return jsonobj;
+		//BuildThread b = new BuildThread(selectedJob.getBuildid(),buildname,jobsRepository);
+		//b.startJob();
+		return Jsonobj;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
 	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
@@ -182,7 +177,22 @@ public class JenkinsJobs {
 		}
 		return null;
 	}	
+	@RequestMapping(value="/StartjobsWithParams",params={"buildid","buildname","Params"},method=RequestMethod.GET)	
+	public JSONObject StartJobWithParams(@RequestParam("buildid") long buildid,@RequestParam("buildname") String buildname,@RequestParam("Params") HashMap<String, String> Params) throws Exception 
+	//public void StartJob(String buildname) throws Exception
+	{
+		try {
+			Thread build= new Thread(new BuildThread(buildid,buildname,jobsRepository,Params));
+			build.start();
 			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+		
+	}		
 	@RequestMapping(value="/Stopjobs",method=RequestMethod.GET)
 	public JSONObject StopJob() throws Exception 
 	{
