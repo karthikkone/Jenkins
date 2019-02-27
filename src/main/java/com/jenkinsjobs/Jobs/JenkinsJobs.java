@@ -1,46 +1,29 @@
 package com.jenkinsjobs.Jobs;
 
-import java.io.IOException;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import java.io.StringReader;
 //import java.awt.List;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Map;
-
-import javax.print.attribute.standard.JobState;
-
+import java.util.Optional;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 
 import net.sf.json.*;
-
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import com.offbytwo.jenkins.JenkinsServer;
-import com.offbytwo.jenkins.client.JenkinsHttpConnection;
-import com.offbytwo.jenkins.model.Build;
-import com.offbytwo.jenkins.model.BuildResult;
-import com.offbytwo.jenkins.model.BuildWithDetails;
 import com.offbytwo.jenkins.model.Job;
 import com.offbytwo.jenkins.model.JobWithDetails;
-import com.offbytwo.jenkins.model.Queue;
 import com.offbytwo.jenkins.model.QueueItem;
 import com.offbytwo.jenkins.model.QueueReference;
 import org.slf4j.Logger;
