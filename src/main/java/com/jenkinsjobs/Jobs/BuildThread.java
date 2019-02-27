@@ -36,22 +36,24 @@ public class BuildThread implements Runnable {
 	private static Session session;
 	
 	private JobStatusRepo jobsRepository;
+	HashMap<String, String> JobParams = new HashMap<String, String>();
 	public BuildThread()
 	{
 		
 	}
 	@Autowired
-	public BuildThread(long buildId,String buildName, JobStatusRepo jobsRepository) {
+	public BuildThread(long buildId,String buildName, JobStatusRepo jobsRepository,HashMap<String, String> JobParams) {
 		this.buildId = buildId;
 		this.buildName = buildName;
 		this.jobsRepository = jobsRepository;
+		this.JobParams =JobParams;
 	} 
 
 	@Override
 	public void run() {
 		try {
-			//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
-			 jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
+			jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+			 //jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			if(JobParams.size()>0)
 			{
@@ -123,8 +125,8 @@ public class BuildThread implements Runnable {
 					jobsRepository.saveAndFlush(currentBuild);
 				});
 		
-		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
-				 jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
+		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+				 //jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
 		while(queueItem == null)
 		{
 	           Thread.sleep(50L);
