@@ -50,17 +50,31 @@ public class BuildThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			
+			//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+			 jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
+			if(JobParams.size()>0)
+			{
+				queueRef=jobinfo.build(JobParams, true);
+			}
+			else
+			{
 			queueRef=jobinfo.build(true);
+			}
 			queueItem = jenkins.getQueueItem(queueRef);
+			Build build = jenkins.getBuild(queueItem);		
+			BuildWithDetails builddetails = build.details();
+			if(builddetails.getParameters() != null)
+			{
+				System.out.println("parameterized");
+			}
 		    JSONObject jsonobj = new JSONObject();				
 			while (queueItem.getExecutable() == null) {		
 			       Thread.sleep(DEFAULT_RETRY_INTERVAL);
 			       queueItem = jenkins.getQueueItem(queueRef);
 			      
 			}
-			Build build = jenkins.getBuild(queueItem);				
+			build = jenkins.getBuild(queueItem);				
 			while(build.details().isBuilding() == true)
 			{						 
 				continue;
@@ -85,91 +99,49 @@ public class BuildThread implements Runnable {
 					jobsRepository.saveAndFlush(currentBuild);
 				});
 			}
+			
+			if (build.details().getResult() == build.details().getResult().ABORTED)
+			{
+				Optional<JobStatus> currentBuildRecord = this.jobsRepository.findById(buildId);
+				currentBuildRecord.ifPresent(currentBuild -> {
+					currentBuild.setBuildstatus("ABORTED");
+					jobsRepository.saveAndFlush(currentBuild);
+				});
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	/*public void StartWihSessionFactory(SessionFactory s) {
-	
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		JenkinsServer jenkins;
-		try {
-			 	 
-			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
-			queueRef=jobinfo.build(true);			
-		    queueItem = jenkins.getQueueItem(queueRef);	
-			while (queueItem.getExecutable() == null) {		
-			       Thread.sleep(DEFAULT_RETRY_INTERVAL);
-			       queueItem = jenkins.getQueueItem(queueRef);
-			      
-			}
-			Build build = jenkins.getBuild(queueItem);				
-			while(build.details().isBuilding() == true)
-			{						 
-				continue;
-			}
-			//JobStatus job = service.getbuild(this.buildId);
-			JobStatus job = jobsrepo.getOne(this.buildId);
-			System.out.println("job :"+job.getBuildname());
-			//Optional<JobStatus> jobstatus = jobsrepo.findById(buildId);			
-			if(build.details().getResult() == build.details().getResult().SUCCESS)
-			{					
-				job.setBuildstatus("SUCCESS");
-				service.updateBuild(job);
-				
-				/*jobstatus.ifPresent(currentBuild -> {
-					currentBuild.setBuildstatus("SUCCESS");
-					jobsrepo.saveAndFlush(currentBuild);
-				});*/
-				
-		//	}
-		//	else if (build.details().getResult() == build.details().getResult().FAILURE) {
-		//		
-		//		job.setBuildstatus("FAILURE");
-		//		service.updateBuild(job);
-				
-				/*jobstatus.ifPresent(currentBuild -> {
-					currentBuild.setBuildstatus("FAILURE");
-					jobsrepo.saveAndFlush(currentBuild);
-				});*/
-				
-		//	}
-		//} catch (Exception e) {
-			// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}		
-			
-		//return null;
+	public void stopThread(long buildId) {
+	       //running = false;
+	       //interrupt();
+	       try {
+	    	   System.out.println("buidld id in stop :"+buildId);
+	    	   Optional<JobStatus> currentBuildRecord = this.jobsRepository.findById(buildId);
+				currentBuildRecord.ifPresent(currentBuild -> {
+					currentBuild.setBuildstatus("discontinuing..");
+					jobsRepository.saveAndFlush(currentBuild);
+				});
 		
-	//}
-	/*public List<JobStatus> CheckStatus(SessionFactory s,long buildid)
-	}
-	/*@RequestMapping(value="/CheckStatus",params={"buildid"},method=RequestMethod.GET)	
-	public JSONObject CheckStatus(@RequestParam("buildid") long buildid) throws Exception 
-	//public JSONObject CheckStatus(long buildid)
-	{
-		try
+		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+				 jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
+		while(queueItem == null)
 		{
-		JSONObject Jsonobj = new JSONObject();
-		//SessionFactory sessionFactory = s;
-		
-			JobStatus job = service.getbuild(buildid);		
-			Jsonobj.put("Buildid", job.getBuildid());
-			Jsonobj.put("Buildname", job.getBuildname());
-			Jsonobj.put("Buildstatus", job.getBuildstatus());
-			return Jsonobj;
+	           Thread.sleep(50L);
+		}
+		Build build = jenkins.getBuild(queueItem);
+	
+		JSONObject jsonobj = new JSONObject();
+		if(build.details().isBuilding()==true)
+		{
+		  build.Stop(true);		  	          
+		}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return null;
-	}*/	
-	
-		// TODO Auto-generated method stub
+	   }
 		
 	}
 	
