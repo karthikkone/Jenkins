@@ -21,7 +21,7 @@ public class BuildThread implements Runnable {
 	private static QueueReference queueRef;
 	private static QueueItem queueItem;	 
 	private static Session session;
-	
+	JenkinsServer jenkins; 
 	private JobStatusRepo jobsRepository;
 	HashMap<String, String> JobParams = new HashMap<String, String>();
 	public BuildThread()
