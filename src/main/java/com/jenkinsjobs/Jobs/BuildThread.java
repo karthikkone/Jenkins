@@ -38,9 +38,7 @@ public class BuildThread implements Runnable {
 
 	@Override
 	public void run() {
-		try {
-			jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
-			 //jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
+		try {			
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			if(JobParams.size()>0)
 			{
@@ -114,8 +112,7 @@ public class BuildThread implements Runnable {
 					jobsRepository.saveAndFlush(currentBuild);
 				});
 		
-		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
-				 //jenkins = new JenkinsServer(new URI("http://localhost:8080"), "kit", "kit");
+		//jenkins
 		while(queueItem == null)
 		{
 	           Thread.sleep(50L);
