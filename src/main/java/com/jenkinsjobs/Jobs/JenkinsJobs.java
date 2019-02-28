@@ -192,6 +192,7 @@ public class JenkinsJobs {
 	//public void StartJob(String buildname) throws Exception
 	{
 		try {
+			System.out.println("Parametrs received from URL :"+Params);
 			Thread build= new Thread(new BuildThread(buildid,buildname,jobsRepository,Params));
 			build.start();
 			
