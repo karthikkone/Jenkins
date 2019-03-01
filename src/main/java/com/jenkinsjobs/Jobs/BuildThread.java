@@ -103,19 +103,11 @@ public class BuildThread implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	public void stopThread(long buildId) {
+	public void stopThread() {
 	       //running = false;
 	       //interrupt();
-	       try {
-	    	   System.out.println("buidld id in stop :"+buildId);
-	    	   Optional<JobStatus> currentBuildRecord = this.jobsRepository.findById(buildId);
-				currentBuildRecord.ifPresent(currentBuild -> {
-					currentBuild.setBuildstatus("discontinuing..");
-					jobsRepository.saveAndFlush(currentBuild);
-				});
+	       try {	       
 		
-		//jenkins
-		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
 		while(queueItem == null)
 		{
 	           Thread.sleep(50L);
@@ -133,7 +125,6 @@ public class BuildThread implements Runnable {
 			e.printStackTrace();
 		}
 	   }
-		
 	}
 	
 
