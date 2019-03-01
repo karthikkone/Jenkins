@@ -153,8 +153,11 @@ public class JenkinsJobs {
 		Jsonobj.put("Buildname", selectedJob.getBuildname());
 		Jsonobj.put("Buildstatus", selectedJob.getBuildstatus());
 		Jsonobj.put("BuildParams",Params);
-		//Thread b= new Thread(new BuildThread(selectedJob.getBuildid(),buildname,jobsRepository,Params));
-		//b.start();
+		if(Params.size() == 0)
+		{
+		Thread b= new Thread(new BuildThread(selectedJob.getBuildid(),buildname,jobsRepository,Params));
+		b.start();
+		}
 		//BuildThread b = new BuildThread(selectedJob.getBuildid(),buildname,jobsRepository);
 		//b.startJob();
 		return Jsonobj;
