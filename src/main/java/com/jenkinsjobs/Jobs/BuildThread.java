@@ -65,7 +65,7 @@ public class BuildThread implements Runnable {
 			       queueItem = jenkins.getQueueItem(queueRef);
 			      
 			}
-			build = jenkins.getBuild(queueItem);				
+			Build build = jenkins.getBuild(queueItem);				
 			while(build.details().isBuilding() == true)
 			{						 
 				continue;
