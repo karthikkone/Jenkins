@@ -208,32 +208,19 @@ public class JenkinsJobs {
 		
 	}		
 	@RequestMapping(value="/Stopjobs",method=RequestMethod.GET)
-	public JSONObject StopJob() throws Exception 
+	public void StopJob() throws Exception 
 	{
-		try{
-		
-		while(queueItem == null)
-		{
-	           Thread.sleep(50L);
-		}
-		Build build = jenkins.getBuild(queueItem);
-	
-		JSONObject jsonobj = new JSONObject();
-		if(build.details().isBuilding()==true)
-		{
-		  build.Stop(true);		  	          
-		}
-	       		
-		return jsonobj; 
+	        try{				
+			
+			BuildThread b = new BuildThread();
+		        b.stopThread();
 		}
 		 catch (Exception e) {
 	         System.err.println(e.getMessage());
 	         throw e;
 	     }
-		finally 
-		{
-		jenkins.close();
-		}
+		
+	
 	
 	}
 	
