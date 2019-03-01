@@ -53,12 +53,12 @@ public class BuildThread implements Runnable {
 			queueRef=jobinfo.build(true);
 			}
 			queueItem = jenkins.getQueueItem(queueRef);
-			Build build = jenkins.getBuild(queueItem);		
+			/*Build build = jenkins.getBuild(queueItem);		
 			BuildWithDetails builddetails = build.details();
 			if(builddetails.getParameters() != null)
 			{
 				System.out.println("parameterized");
-			}
+			}*/
 		    JSONObject jsonobj = new JSONObject();				
 			while (queueItem.getExecutable() == null) {		
 			       Thread.sleep(DEFAULT_RETRY_INTERVAL);
