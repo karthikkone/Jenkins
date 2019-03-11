@@ -191,9 +191,11 @@ public class JenkinsJobs {
 		return null;
 	}	
 	@RequestMapping(value="/StartjobsWithParams",params={"buildid","buildname","Params"},method=RequestMethod.GET)	
-	public JSONObject StartJobWithParams(@RequestParam("buildid") long buildid,@RequestParam("buildname") String buildname,@RequestParam("Params") HashMap<String, String> Params) throws Exception 
-	//public void StartJob(String buildname) throws Exception
+	//public JSONObject StartJobWithParams(@RequestParam("buildid") long buildid,@RequestParam("buildname") String buildname,@RequestParam("Params") HashMap<String, String> Params) throws Exception 
+	public void StartjobsWithParams(long buildid,String buildname,Map<String, String> Params) throws Exception
 	{
+	//public void StartJob(String buildname) throws Exception
+	
 		try {
 			System.out.println("Parametrs received from URL :"+Params);
 			Thread build= new Thread(new BuildThread(buildid,buildname,jobsRepository,Params));
