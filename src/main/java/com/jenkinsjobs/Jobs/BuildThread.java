@@ -23,13 +23,16 @@ public class BuildThread implements Runnable {
 	private static Session session;
 	JenkinsServer jenkins; 
 	private JobStatusRepo jobsRepository;
-	HashMap<String, String> JobParams = new HashMap<String, String>();
+	//HashMap<String, String> JobParams = new HashMap<String, String>();
+	Map<String, String> JobParams = new HashMap<String, String>();
 	public BuildThread()
 	{
 		
 	}
 	@Autowired
-	public BuildThread(long buildId,String buildName, JobStatusRepo jobsRepository,HashMap<String, String> JobParams) {
+	//public BuildThread(long buildId,String buildName, JobStatusRepo jobsRepository,HashMap<String, String> JobParams) {
+	public BuildThread(long buildId,String buildName, JobStatusRepo jobsRepository,Map<String, String> JobParams) 
+	{
 		this.buildId = buildId;
 		this.buildName = buildName;
 		this.jobsRepository = jobsRepository;
