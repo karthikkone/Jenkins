@@ -193,7 +193,7 @@ public class JenkinsJobs {
 		}
 		return null;
 	}	
-	@RequestMapping(value="/StartjobsWithParams",params={"buildid","buildname","Params"},method=RequestMethod.POST)	
+	@RequestMapping(value="/StartjobsWithParams",params={"buildid","buildname"},method=RequestMethod.POST)	
 	//public JSONObject StartJobWithParams(@RequestParam("buildid") long buildid,@RequestParam("buildname") String buildname,@RequestParam("Params") HashMap<String, String> Params) throws Exception 
 	public void StartjobsWithParams(long buildid,String buildname,@RequestBody Map<String, String> Params) throws Exception
 	{
