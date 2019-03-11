@@ -34,6 +34,7 @@ import com.offbytwo.jenkins.model.QueueItem;
 import com.offbytwo.jenkins.model.QueueReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 public class JenkinsJobs {
 	
@@ -192,9 +193,9 @@ public class JenkinsJobs {
 		}
 		return null;
 	}	
-	@RequestMapping(value="/StartjobsWithParams",params={"buildid","buildname","Params"},method=RequestMethod.GET)	
+	@RequestMapping(value="/StartjobsWithParams",params={"buildid","buildname","Params"},method=RequestMethod.POST)	
 	//public JSONObject StartJobWithParams(@RequestParam("buildid") long buildid,@RequestParam("buildname") String buildname,@RequestParam("Params") HashMap<String, String> Params) throws Exception 
-	public void StartjobsWithParams(long buildid,String buildname,Map<String, String> Params) throws Exception
+	public void StartjobsWithParams(long buildid,String buildname,@RequestBody Map<String, String> Params) throws Exception
 	{
 	//public void StartJob(String buildname) throws Exception
 	
