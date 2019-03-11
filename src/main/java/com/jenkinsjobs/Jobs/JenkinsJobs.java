@@ -207,7 +207,7 @@ public class JenkinsJobs {
 		{
 			e.printStackTrace();
 		}
-		return null;
+		//return null;
 		
 	}		
 	@RequestMapping(value="/Stopjobs",method=RequestMethod.GET)
