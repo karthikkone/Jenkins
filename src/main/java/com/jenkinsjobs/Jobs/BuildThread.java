@@ -43,7 +43,7 @@ public class BuildThread implements Runnable {
 	public void run() {
 		try {		
 			//jenkins
-			
+			jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			if(JobParams.size()>0)
 			{
@@ -110,7 +110,7 @@ public class BuildThread implements Runnable {
 	       //running = false;
 	       //interrupt();
 	       try {	       
-		
+		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
 		while(queueItem == null)
 		{
 	           Thread.sleep(50L);
