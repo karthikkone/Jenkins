@@ -51,6 +51,7 @@ public class BuildThread implements Runnable {
 			{
 				System.out.println("params :"+JobParams.keySet());
 				System.out.println("param values :"+JobParams.values());
+				System.out.println("params sent :"+JobParams);
 				queueRef=jobinfo.build(JobParams, true);				
 			}
 			else
