@@ -51,29 +51,17 @@ public class BuildThread implements Runnable {
 			{
 				System.out.println("params :"+JobParams.keySet());
 				System.out.println("param values :"+JobParams.values());
-				queueRef=jobinfo.build(JobParams, true);
-				if(queueRef == null)
-				{
-					System.out.println("queref is null");
-				}
+				queueRef=jobinfo.build(JobParams, true);				
 			}
 			else
 			{
 			queueRef=jobinfo.build(true);
 			}
 			queueItem = jenkins.getQueueItem(queueRef);
-			/*Build build = jenkins.getBuild(queueItem);		
-			BuildWithDetails builddetails = build.details();
-			if(builddetails.getParameters() != null)
-			{
-				System.out.println("parameterized");
-			}*/
-		    JSONObject jsonobj = new JSONObject();				
 			while (queueItem.getExecutable() == null) {		
 			       Thread.sleep(DEFAULT_RETRY_INTERVAL);
-			       queueItem = jenkins.getQueueItem(queueRef);
-			      
-			}
+			       queueItem = jenkins.getQueueItem(queueRef);			      
+			}					
 			Build build = jenkins.getBuild(queueItem);				
 			while(build.details().isBuilding() == true)
 			{						 
