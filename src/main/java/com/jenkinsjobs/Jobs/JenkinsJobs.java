@@ -153,11 +153,8 @@ public class JenkinsJobs {
 		JobStatus selectedJob = jobsRepository.saveAndFlush(jobStat);   
 		Jsonobj.put("Buildid", selectedJob.getBuildid());
 		Jsonobj.put("Buildname", selectedJob.getBuildname());
-		Jsonobj.put("Buildstatus", selectedJob.getBuildstatus());
-		/*for(int l=0;l<Paramtypes.size();l++)
-		{*/
-		Jsonobj.put("Paramtype",Paramtypes);
-		//}
+		Jsonobj.put("Buildstatus", selectedJob.getBuildstatus());		
+		Jsonobj.put("Paramtype",Paramtypes);	
 		Jsonobj.put("BuildParams",Params);
 		if(Params.size() == 0)
 		{
