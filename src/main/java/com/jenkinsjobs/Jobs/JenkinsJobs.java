@@ -154,10 +154,10 @@ public class JenkinsJobs {
 		Jsonobj.put("Buildid", selectedJob.getBuildid());
 		Jsonobj.put("Buildname", selectedJob.getBuildname());
 		Jsonobj.put("Buildstatus", selectedJob.getBuildstatus());
-		for(int l=0;l<Paramtypes.size();l++)
-		{
-		Jsonobj.put("Paramtype",Paramtypes.get(l));
-		}
+		/*for(int l=0;l<Paramtypes.size();l++)
+		{*/
+		Jsonobj.put("Paramtype",Paramtypes);
+		//}
 		Jsonobj.put("BuildParams",Params);
 		if(Params.size() == 0)
 		{
