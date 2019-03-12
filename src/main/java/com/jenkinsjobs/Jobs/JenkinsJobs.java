@@ -117,8 +117,7 @@ public class JenkinsJobs {
 	        	
 	            for(int j=0; j< Param.getChildNodes().getLength(); j++)
 	        	{
-	            	Node ParamType = Param.getChildNodes().item(j).getNextSibling();
-			Paramtypes.add(ParamType.getNodeName());
+	            	Node ParamType = Param.getChildNodes().item(j).getNextSibling();			
 	            	//System.out.println("param types in loop :"+ParamType.getChildNodes().item(0).getNodeName());
 	            //NodeList ParamTypes = doc.getElementsByTagName(ParamType.getNodeName());
 	            //System.out.println("ParamTypes  ka length :"+ParamTypes.getLength());
@@ -128,6 +127,7 @@ public class JenkinsJobs {
 	            	//Node ParamType1 = ParamTypes.item(0);
 	            	if(ParamType != null)
 	            	{
+			Paramtypes.add(ParamType.getNodeName());
 	            	if(ParamType.hasChildNodes())
 	            	{
 	            	 Node ParamName1 = ParamType.getChildNodes().item(0).getNextSibling();	            	 
@@ -154,7 +154,10 @@ public class JenkinsJobs {
 		Jsonobj.put("Buildid", selectedJob.getBuildid());
 		Jsonobj.put("Buildname", selectedJob.getBuildname());
 		Jsonobj.put("Buildstatus", selectedJob.getBuildstatus());
-		Jsonobj.put("Paramtype",Paramtypes);
+		for(int l=0;l<Paramtypes.size();l++)
+		{
+		Jsonobj.put("Paramtype",Paramtypes.get(l));
+		}
 		Jsonobj.put("BuildParams",Params);
 		if(Params.size() == 0)
 		{
