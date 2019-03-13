@@ -123,7 +123,7 @@ public class JenkinsJobs {
 	            	//{
 	            	//Paramtypes.put("Paramtype",ParamType.getNodeName());
 			//Paramtypes.put(ParamType.getNodeName(),"");
-	            	System.out.println("to check text :"+ParamType.getNodeName());
+	            	//System.out.println("to check text :"+ParamType.getNodeName());
 	            	//}
 	            	//System.out.println("param types in loop :"+ParamType.getChildNodes().item(0).getNodeName());
 	            //NodeList ParamTypes = doc.getElementsByTagName(ParamType.getNodeName());
@@ -143,7 +143,7 @@ public class JenkinsJobs {
 	            	 System.out.println("ParamValues in paramtypes:"+ParamName1.getChildNodes().item(0).getNodeValue());
 	            	 Params.put(ParamName1.getChildNodes().item(0).getNodeValue(), "");
 	            	}
-			}
+			
 	            	}
 	            	else
 	            	{
