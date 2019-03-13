@@ -121,7 +121,8 @@ public class JenkinsJobs {
 	            	Node ParamType = Param.getChildNodes().item(j).getNextSibling();
 			    if (ParamType != null && ParamType.getNodeType() == ParamType.ELEMENT_NODE)
 	            	{
-	            	Paramtypes.put("Paramtype",ParamType.getNodeName());
+	            	//Paramtypes.put("Paramtype",ParamType.getNodeName());
+			Paramtypes.put(ParamType.getNodeName(),"");
 	            	System.out.println("to check text :"+ParamType.getNodeName());
 	            	}
 	            	//System.out.println("param types in loop :"+ParamType.getChildNodes().item(0).getNodeName());
