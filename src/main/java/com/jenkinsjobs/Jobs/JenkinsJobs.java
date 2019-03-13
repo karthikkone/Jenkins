@@ -119,12 +119,12 @@ public class JenkinsJobs {
 	            for(int j=0; j< Param.getChildNodes().getLength(); j++)
 	        	{
 	            	Node ParamType = Param.getChildNodes().item(j).getNextSibling();
-			    if (ParamType != null && ParamType.getNodeType() == ParamType.ELEMENT_NODE)
-	            	{
+			   //if (ParamType != null && ParamType.getNodeType() == ParamType.ELEMENT_NODE)
+	            	//{
 	            	//Paramtypes.put("Paramtype",ParamType.getNodeName());
-			Paramtypes.put(ParamType.getNodeName(),"");
+			//Paramtypes.put(ParamType.getNodeName(),"");
 	            	System.out.println("to check text :"+ParamType.getNodeName());
-	            	}
+	            	//}
 	            	//System.out.println("param types in loop :"+ParamType.getChildNodes().item(0).getNodeName());
 	            //NodeList ParamTypes = doc.getElementsByTagName(ParamType.getNodeName());
 	            //System.out.println("ParamTypes  ka length :"+ParamTypes.getLength());
@@ -132,7 +132,7 @@ public class JenkinsJobs {
 	             //{
 	            	// Node ParamType1 = ParamTypes.item(k);
 	            	//Node ParamType1 = ParamTypes.item(0);
-	            	if(ParamType != null)
+	            	if(ParamType != null && ParamType.getNodeName())
 	            	{
 			//Paramtypes.add(ParamType.getNodeName());
 			//Paramtypes.put("Paramtype",ParamType.getNodeName());
@@ -143,6 +143,7 @@ public class JenkinsJobs {
 	            	 System.out.println("ParamValues in paramtypes:"+ParamName1.getChildNodes().item(0).getNodeValue());
 	            	 Params.put(ParamName1.getChildNodes().item(0).getNodeValue(), "");
 	            	}
+			}
 	            	}
 	            	else
 	            	{
