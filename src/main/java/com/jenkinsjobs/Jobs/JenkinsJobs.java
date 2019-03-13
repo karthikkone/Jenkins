@@ -132,7 +132,7 @@ public class JenkinsJobs {
 	             //{
 	            	// Node ParamType1 = ParamTypes.item(k);
 	            	//Node ParamType1 = ParamTypes.item(0);
-	            	if(ParamType != null && ParamType.getNodeType() == ParamType.ELEMENT_NODE)
+	            	if(ParamType != null)
 	            	{
 			//Paramtypes.add(ParamType.getNodeName());
 			 //Paramtypes.put("Paramtype",ParamType.getNodeName());
