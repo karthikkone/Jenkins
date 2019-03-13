@@ -100,7 +100,8 @@ public class JenkinsJobs {
 	{
 		try {
 		JSONObject Jsonobj = new JSONObject();	 
-		List<String> Paramtypes = new ArrayList<String>();
+		//List<String> Paramtypes = new ArrayList<String>();
+		HashMap<String, String> Paramtypes = new HashMap<String, String>();
 		HashMap<String, String>  Params = new HashMap<String, String>();
 		//JSONObject config = ConfigParser.parseConfigFile("C:\\Users\\kirti.annajigar\\Workspace\\Jenkins-JPA-master\\src\\main\\resources\\config.xml");
 		//jenkins =
@@ -125,9 +126,10 @@ public class JenkinsJobs {
 	             //{
 	            	// Node ParamType1 = ParamTypes.item(k);
 	            	//Node ParamType1 = ParamTypes.item(0);
-	            	if(ParamType != null)
+	            	if(ParamType != null && ParamType.getNodeType() == ParamType.ELEMENT_NODE)
 	            	{
-			Paramtypes.add(ParamType.getNodeName());
+			//Paramtypes.add(ParamType.getNodeName());
+			Paramtypes.put("Paramtype",ParamType.getNodeName());
 	            	if(ParamType.hasChildNodes())
 	            	{
 	            	 Node ParamName1 = ParamType.getChildNodes().item(0).getNextSibling();	            	 
