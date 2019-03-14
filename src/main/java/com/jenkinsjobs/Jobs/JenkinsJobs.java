@@ -1,8 +1,10 @@
 package com.jenkinsjobs.Jobs;
 
+import java.io.IOException;
 import java.io.StringReader;
 //import java.awt.List;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Optional;
 import javax.xml.parsers.DocumentBuilder;
@@ -12,16 +14,24 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import net.sf.json.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import com.jenkinsjobs.model.JobConfiguration;
 import com.offbytwo.jenkins.JenkinsServer;
 import com.offbytwo.jenkins.model.Build;
 import com.offbytwo.jenkins.model.BuildWithDetails;
@@ -59,10 +69,12 @@ public class JenkinsJobs {
     private JobStatusRepo jobsrepository;*/
      private JobStatusRepo jobsRepository;
      private final Logger logger = LoggerFactory.getLogger(JenkinsJobs.class);
-
+     private SpringTemplateEngine templateEngine;
+     
 	@Autowired
-	public JenkinsJobs(JobStatusRepo repository) {
+	public JenkinsJobs(JobStatusRepo repository, SpringTemplateEngine templateEngine) {
 		this.jobsRepository = repository;
+		this.templateEngine = templateEngine;
 	}
 	
     /*@Autowired
@@ -238,6 +250,37 @@ public class JenkinsJobs {
 		
 	
 	
+	}
+	
+	//create new job
+	@RequestMapping(value="/createjob", method=RequestMethod.POST)
+	public ResponseEntity createJob(@RequestBody JobConfiguration jobDetails) {
+		String xml = "hello";
+		HashMap<String,String> jobConfig = new HashMap<String,String>();
+		Context context = new Context();
+		context.setVariable("jobConfig", jobConfig);
+		
+		jobConfig.put("description", jobDetails.getDescription());
+		jobConfig.put("github_project_url", jobDetails.getGithubProject());
+		jobConfig.put("github_credential_id", jobDetails.getGithubCredentialId());
+		jobConfig.put("git_branch", jobDetails.getGitBranch());
+		jobConfig.put("batch_script", jobDetails.getBatchScript());
+		jobConfig.put("targets", jobDetails.getBuildTargets());
+		String xmlConfig = this.templateEngine.process("job-config", context);
+		
+		
+		try {
+			jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+			jenkins.createJob(jobDetails.getJobName(), xmlConfig);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity(HttpStatus.OK);
 	}
 	
 	public org.w3c.dom.Document convertStringToXMLDocument(String xmlString)

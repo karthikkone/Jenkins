@@ -10,7 +10,13 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.templatemode.TemplateMode;
+
 import com.offbytwo.jenkins.model.Build;
 import com.offbytwo.jenkins.model.BuildWithDetails;
 
@@ -45,5 +51,24 @@ public class JobsApplication {
 //			e.printStackTrace();
 //		}
 		
+	}
+	
+	@Bean
+	SpringResourceTemplateResolver xmlTemplateResolver(ApplicationContext appCtx) {
+		SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+		templateResolver.setApplicationContext(appCtx);
+		templateResolver.setPrefix("classpath:/templates/");
+		templateResolver.setSuffix(".xml");
+		templateResolver.setTemplateMode(TemplateMode.XML);
+		templateResolver.setCacheable(false);
+		templateResolver.setCharacterEncoding("UTF-8");
+		return templateResolver;
+	}
+	
+	@Bean(name="springTemplateEngine")
+	SpringTemplateEngine templateEngine(ApplicationContext appCtx) {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(xmlTemplateResolver(appCtx));
+		return templateEngine;
 	}
 }
