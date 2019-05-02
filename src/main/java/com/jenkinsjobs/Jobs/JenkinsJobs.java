@@ -83,7 +83,7 @@ public class JenkinsJobs {
 	public JSONObject getJobs() throws Exception 
 	{
 		 try {	         
-		  jenkins = new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123");
+		  //jenkins = 
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
 	         //System.out.println("new jobs... :"+jobs);
@@ -117,7 +117,7 @@ public class JenkinsJobs {
 		HashMap<String, String>  Params = new HashMap<String, String>();
 		//JSONObject config = ConfigParser.parseConfigFile("C:\\Users\\kirti.annajigar\\Workspace\\Jenkins-JPA-master\\src\\main\\resources\\config.xml");
 		//jenkins =
-	        jenkins = new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123");
+	        //jenkins = 
 		JobWithDetails jobinfo = jenkins.getJob(buildname);
 		String jobxml = jenkins.getJobXml(buildname);		
 		System.out.println("XML :"+jobxml);	
@@ -198,7 +198,7 @@ public class JenkinsJobs {
 		try
 		{
 		//jenkins = 
-		 jenkins = new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123");
+		 //jenkins = 
 		JSONObject Jsonobj = new JSONObject();
 		//SessionFactory sessionFactory = s;
 		
@@ -270,7 +270,7 @@ public class JenkinsJobs {
 		
 		
 		try {
-			 jenkins = new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123"); 
+			 //jenkins = 
 			jenkins.createJob(jobDetails.getJobName(), xmlConfig, true);
 			
 		} catch (URISyntaxException e) {
