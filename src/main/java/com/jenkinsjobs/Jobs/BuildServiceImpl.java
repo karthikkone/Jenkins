@@ -3,6 +3,8 @@ package com.jenkinsjobs.Jobs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jenkinsjobs.model.JobStatus;
+
 @Service
 public class BuildServiceImpl implements BuildService{
     @Autowired

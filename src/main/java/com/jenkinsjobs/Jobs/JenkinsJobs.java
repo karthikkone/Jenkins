@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -32,6 +33,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import com.jenkinsjobs.model.JobConfiguration;
+import com.jenkinsjobs.model.JobStatus;
 import com.offbytwo.jenkins.JenkinsServer;
 import com.offbytwo.jenkins.model.Build;
 import com.offbytwo.jenkins.model.BuildWithDetails;
@@ -48,14 +50,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 public class JenkinsJobs {
 	
-	/*@Value("${jobs.url}")
+	@Value("${jenkins.url}")
     private String Url;
 
-    @Value("${jobs.username}")
+    @Value("${jenkins.username}")
     private String Username;
 
-    @Value("${jobs.password}")
-    private String password;*/
+    @Value("${jenkins.password}")
+    private String password;
+    
     public JenkinsServer jenkins;
     //private final Long retryInterval;
     private static final Long DEFAULT_RETRY_INTERVAL = 200L;
@@ -75,6 +78,8 @@ public class JenkinsJobs {
 	public JenkinsJobs(JobStatusRepo repository, SpringTemplateEngine templateEngine) {
 		this.jobsRepository = repository;
 		this.templateEngine = templateEngine;
+		
+		
 	}
 	
     /*@Autowired
@@ -82,8 +87,9 @@ public class JenkinsJobs {
 	@RequestMapping(value="/jobs", method=RequestMethod.GET)
 	public JSONObject getJobs() throws Exception 
 	{
+		System.out.println("URL="+this.Url+" PASSWORD="+password+" USERNAME="+Username);
 		 try {	         
-		 jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+		 jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
 	         //System.out.println("new jobs... :"+jobs);
@@ -117,7 +123,7 @@ public class JenkinsJobs {
 		HashMap<String, String>  Params = new HashMap<String, String>();
 		//JSONObject config = ConfigParser.parseConfigFile("C:\\Users\\kirti.annajigar\\Workspace\\Jenkins-JPA-master\\src\\main\\resources\\config.xml");
 		//jenkins =
-	        jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+	        jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
 		JobWithDetails jobinfo = jenkins.getJob(buildname);
 		String jobxml = jenkins.getJobXml(buildname);		
 		System.out.println("XML :"+jobxml);	
@@ -198,7 +204,7 @@ public class JenkinsJobs {
 		try
 		{
 		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
-		jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+		jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
 		JSONObject Jsonobj = new JSONObject();
 		//SessionFactory sessionFactory = s;
 		
@@ -266,6 +272,7 @@ public class JenkinsJobs {
 		jobConfig.put("git_branch", jobDetails.getGitBranch());
 		jobConfig.put("batch_script", jobDetails.getBatchScript());
 		jobConfig.put("targets", jobDetails.getBuildTargets());
+		jobConfig.put("target_org_credential_id", jobDetails.getTargetOrgCredentialId());
 		String xmlConfig = this.templateEngine.process("job-config", context);
 		
 		

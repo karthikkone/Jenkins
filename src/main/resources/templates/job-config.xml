@@ -93,7 +93,7 @@ loginurl=https://test.salesforce.com/</properties>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.17">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
-          <credentialsId>115d50f5-110a-4e71-aa24-e37c8f20f8f2</credentialsId>
+          <credentialsId th:text="${jobConfig['target_org_credential_id']}"></credentialsId>
           <usernameVariable>sfUserName</usernameVariable>
           <passwordVariable>sfPassword</passwordVariable>
         </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>

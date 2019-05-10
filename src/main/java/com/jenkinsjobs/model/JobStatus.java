@@ -1,4 +1,4 @@
-package com.jenkinsjobs.Jobs;
+package com.jenkinsjobs.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

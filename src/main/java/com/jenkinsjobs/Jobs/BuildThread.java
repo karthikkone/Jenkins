@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.jenkinsjobs.model.JobStatus;
 import com.offbytwo.jenkins.JenkinsServer;
 import com.offbytwo.jenkins.model.Build;
 import com.offbytwo.jenkins.model.BuildWithDetails;
