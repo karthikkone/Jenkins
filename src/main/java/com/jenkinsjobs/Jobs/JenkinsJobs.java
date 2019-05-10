@@ -89,7 +89,9 @@ public class JenkinsJobs {
 	{
 		System.out.println("URL="+this.Url+" PASSWORD="+password+" USERNAME="+Username);
 		 try {	         
+
 		 jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
+
 	         List<String> jobnames = new ArrayList<String>();    
 	         Map<String, Job> jobs = jenkins.getJobs();
 	         //System.out.println("new jobs... :"+jobs);
@@ -124,6 +126,7 @@ public class JenkinsJobs {
 		//JSONObject config = ConfigParser.parseConfigFile("C:\\Users\\kirti.annajigar\\Workspace\\Jenkins-JPA-master\\src\\main\\resources\\config.xml");
 		//jenkins =
 	        jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
+
 		JobWithDetails jobinfo = jenkins.getJob(buildname);
 		String jobxml = jenkins.getJobXml(buildname);		
 		System.out.println("XML :"+jobxml);	
@@ -203,7 +206,7 @@ public class JenkinsJobs {
 	{
 		try
 		{
-		//jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agilepro", "infosys@123");
+
 		jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
 		JSONObject Jsonobj = new JSONObject();
 		//SessionFactory sessionFactory = s;
@@ -277,7 +280,7 @@ public class JenkinsJobs {
 		
 		
 		try {
-			jenkins = new JenkinsServer(new URI("https://kone.iagilepro.com"), "agile.pro@kone.com", "infy1234");
+			jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
 			jenkins.createJob(jobDetails.getJobName(), xmlConfig, true);
 			
 		} catch (URISyntaxException e) {
