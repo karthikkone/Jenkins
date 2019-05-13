@@ -18,6 +18,15 @@ import net.sf.json.JSONObject;
 
 public class BuildThread implements Runnable {
 	
+	@Value("${jenkins.url}")
+    	private String Url;
+
+    	@Value("${jenkins.username}")
+    	private String Username;
+
+    	@Value("${jenkins.password}")
+    	private String password;
+	
 	private String buildName;
 	private Long buildId;
 	private static final Long DEFAULT_RETRY_INTERVAL = 200L;
