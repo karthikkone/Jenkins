@@ -16,6 +16,9 @@ import com.offbytwo.jenkins.model.QueueItem;
 import com.offbytwo.jenkins.model.QueueReference;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
 public class BuildThread implements Runnable {
 	
 	@Value("${jenkins.url}")
