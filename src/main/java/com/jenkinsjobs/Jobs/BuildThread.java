@@ -15,7 +15,7 @@ import com.offbytwo.jenkins.model.JobWithDetails;
 import com.offbytwo.jenkins.model.QueueItem;
 import com.offbytwo.jenkins.model.QueueReference;
 import net.sf.json.JSONObject;
-
+import org.springframework.web.bind.annotation.RequestBody;
 public class BuildThread implements Runnable {
 	
 	@Value("${jenkins.url}")
