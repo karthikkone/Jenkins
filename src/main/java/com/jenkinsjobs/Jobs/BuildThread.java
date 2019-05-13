@@ -18,7 +18,7 @@ import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
+@RestController
 public class BuildThread implements Runnable {
 	
 	@Value("${jenkins.url}")
