@@ -124,9 +124,8 @@ public class JenkinsJobs {
 		HashMap<String, String> Paramtypes = new HashMap<String, String>();
 		HashMap<String, String>  Params = new HashMap<String, String>();
 		//JSONObject config = ConfigParser.parseConfigFile("C:\\Users\\kirti.annajigar\\Workspace\\Jenkins-JPA-master\\src\\main\\resources\\config.xml");
-		//jenkins =
-	        //jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
-		jenkins = new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123"); 
+		//jenkins =	      
+		jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
 		JobWithDetails jobinfo = jenkins.getJob(buildname);
 		String jobxml = jenkins.getJobXml(buildname);		
 		System.out.println("XML :"+jobxml);	
@@ -206,9 +205,8 @@ public class JenkinsJobs {
 	{
 		try
 		{
-
 		//jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
-		jenkins= new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123"); 
+		jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
 		JSONObject Jsonobj = new JSONObject();
 		//SessionFactory sessionFactory = s;
 		
