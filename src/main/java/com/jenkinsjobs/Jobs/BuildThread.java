@@ -18,7 +18,7 @@ import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-@RestController
+
 public class BuildThread implements Runnable {
 	
 	@Value("${jenkins.url}")
@@ -58,7 +58,8 @@ public class BuildThread implements Runnable {
 	public void run() {
 		try {		
 			//jenkins
-			 jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
+			 //jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password);
+			jenkins = new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123");
 			JobWithDetails jobinfo = jenkins.getJob(this.buildName);
 			if(JobParams.size()>0)
 			{
@@ -118,7 +119,8 @@ public class BuildThread implements Runnable {
 	       //running = false;
 	       //interrupt();
 	       try {	       
-		 jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password); 
+		 //jenkins = new JenkinsServer(new URI(this.Url), this.Username, this.password); 
+		       jenkins = new JenkinsServer(new URI("https://infosys.iagilepro.com"), "admin", "Agile@123");
 		while(queueItem == null)
 		{
 	           Thread.sleep(50L);
