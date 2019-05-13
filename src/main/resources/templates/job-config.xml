@@ -60,6 +60,7 @@
       <buildFile>C:\TestOrg1\build.xml</buildFile>
       <properties>username =$sfUserName
 password =$sfPassword
+        workspace =$WORKSPACE
 </properties>
     </hudson.tasks.Ant>
   </builders>
