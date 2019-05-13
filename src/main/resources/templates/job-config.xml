@@ -60,8 +60,7 @@
       <buildFile>C:\TestOrg1\build.xml</buildFile>
       <properties>username =$sfUserName
 password =$sfPassword
-workspace=$WORKSPACE
-loginurl=https://test.salesforce.com/</properties>
+</properties>
     </hudson.tasks.Ant>
   </builders>
   <publishers>
